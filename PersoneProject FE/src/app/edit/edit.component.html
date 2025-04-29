@@ -1,0 +1,26 @@
+<div *ngIf="persona">
+    <form [formGroup]="form" (ngSubmit) ="modificaPersona()">
+        <div>
+            <input pInputText placeholder="nome" formControlName="nome"/>
+            <div *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched">
+                <p *ngIf="form.get('nome')?.hasError('required')">Il nome è obbligatorio.</p>
+            </div>
+        </div>
+        
+        <div>
+            <input pInputText placeholder="cognome" formControlName="cognome"/>
+            <div *ngIf="form.get('cognome')?.invalid && form.get('nome')?.touched">
+                <p *ngIf="form.get('cognome')?.hasError('required')">Il cognome è obbligatorio.</p>
+            </div>
+        </div>
+        
+        <div>
+            <input pInputText placeholder="eta" formControlName="eta"/>
+            <div *ngIf="form.get('eta')?.invalid && form.get('eta')?.touched">
+                <p *ngIf="form.get('eta')?.hasError('required')">L'età è obbligatoria.</p>
+            </div>
+        </div>
+        
+        <p-button type="submit" [disabled]="form.invalid" label="Conferma"/>
+    </form>
+</div>

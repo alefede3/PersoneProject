@@ -1,0 +1,57 @@
+<p-table [value]="listaPersone" 
+        [rowsPerPageOptions]="[10,20,30]"
+        [paginator]="true"
+        [rows]="10"
+        (onPage)="onPageChange($event)">
+    <ng-template #header>
+        <tr>
+            <th style="width:25%">Nome
+                <p>
+                    <input type="text" pInputText [(ngModel)]="nomeInput" placeholder="Cerca" (keyup.enter)="filtraNome()" pSize="small" />
+                </p>   
+            </th>
+            <th style="width:25%">Cognome
+                <p>
+                    <input type="text" pInputText [(ngModel)]="cognomeInput" placeholder="Cerca" (keyup.enter)="filtraCognome()" pSize="small" />
+                </p>
+            </th>
+            <th style="width:25%">Età</th>
+            <th style="width:25%">Modifica</th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-persona>
+        <tr>
+            <td>{{ persona.nome }}</td>
+            <td>{{ persona.cognome }}</td>
+            <td>
+                <div style="display: flex; align-items: center; gap: 50px;">
+                    <span>{{ persona.eta }}</span>
+                    <p-button (click)="showDialog(persona)" label="Modifica età" styleClass="p-button-sm"></p-button>
+                </div> 
+            </td>
+            <td>
+                <i (click)="goToEditPersona(persona)" class="pi pi-user-edit" style="font-size: 1rem"></i>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+<p-dialog header="Modifica Età" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem', height: '22rem'}">
+    <div style="margin-bottom: 1rem; text-align: left;">
+        <span class="p-text-secondary" style="font-weight: normal;">Inserisci l'età:</span>
+    </div>
+    <div style="margin-bottom: 1rem; text-align: left;">
+        <div style="width: 100%; display: flex; flex-direction: column; gap: 1rem;">
+            <div class="card flex justify-start" style="width: 100%; max-width: 300px;">
+                <p-select [options]="etaSelezionabili" [(ngModel)]="etaSelezionata" [editable]="true" class="w-full" />
+            </div>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; width: 100%; margin-top: 1rem;">
+            <p-button label="Cancel" severity="secondary" (click)="visible = false" />
+            <p-button label="Save" (click)="savePersona(personaEdit)" />
+        </div>
+    </div>
+</p-dialog>
+
+
+
+

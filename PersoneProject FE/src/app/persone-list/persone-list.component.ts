@@ -10,12 +10,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
-
-
+import { ToolbarModule } from 'primeng/toolbar';
 
 @Component({
   selector: 'app-persone-list',
-  imports: [TableModule, CommonModule, PaginatorModule, FormsModule, InputTextModule, DialogModule, ButtonModule, SelectModule],
+  imports: [TableModule, CommonModule, PaginatorModule, FormsModule, InputTextModule, DialogModule, ButtonModule, SelectModule, ToolbarModule],
   providers: [ListaPersoneService],
   templateUrl: './persone-list.component.html',
   styleUrl: './persone-list.component.scss'
@@ -27,6 +26,7 @@ export class PersoneListComponent implements OnInit{
 
   page: number = 0;
   size: number = 10;
+  totalRecords: number = this.listaPersone.length;
 
   nomeInput: string="";
   cognomeInput: string="";
@@ -41,17 +41,19 @@ export class PersoneListComponent implements OnInit{
   ngOnInit(): void{
     this.listaPersoneService.getPersonePaginate(this.page, this.size).subscribe(response => {
       this.listaPersone = response;
+
     });
 
-    for (let i = 1; i < 101; i++) {
+    for (let i = 1; i <= 100; i++) {
       this.etaSelezionabili.push(i);  
     }
   }
 
   onPageChange(event: PaginatorState) {
-    first: event.first!/event.rows!;
-    console.log(event)
-    this.listaPersoneService.getPersonePaginate(event.first!, event.rows!).subscribe(response => {
+    this.page = event.first!/event.rows!;
+    this.size = event.rows!;
+    console.log("pagina", this.page, "num righe", this.size)
+    this.listaPersoneService.getPersonePaginate(this.page, this.size).subscribe(response => {
       this.listaPersone = response;
     })   
   }
@@ -70,7 +72,14 @@ export class PersoneListComponent implements OnInit{
 
   goToEditPersona(persona: Persona){
     this.router.navigate([`/edit/${persona.id}`]);
-    console.log("persona passata ", persona, "id passato ", persona.id) 
+    console.log("persona passata ", persona) 
+  }
+
+  showDialog(persona: Persona) {
+    this.personaEdit = persona;
+    this.etaSelezionata = persona.eta;
+
+    this.visible = true;
   }
 
   savePersona(persona: Persona) {
@@ -80,10 +89,5 @@ export class PersoneListComponent implements OnInit{
     this.visible = false;
   }
 
-  showDialog(persona: Persona) {
-    this.personaEdit = persona;
-    this.etaSelezionata = persona.eta;
-
-    this.visible = true;
-  }
+  
 }

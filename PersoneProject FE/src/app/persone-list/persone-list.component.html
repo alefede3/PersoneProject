@@ -2,6 +2,9 @@
         [rowsPerPageOptions]="[10,20,30]"
         [paginator]="true"
         [rows]="10"
+        [totalRecords]="totalRecords"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="{first} - {last} of {totalRecords}"
         (onPage)="onPageChange($event)">
     <ng-template #header>
         <tr>
@@ -32,6 +35,7 @@
             <td>
                 <i (click)="goToEditPersona(persona)" class="pi pi-user-edit" style="font-size: 1rem"></i>
             </td>
+            
         </tr>
     </ng-template>
 </p-table>
@@ -51,7 +55,3 @@
         </div>
     </div>
 </p-dialog>
-
-
-
-

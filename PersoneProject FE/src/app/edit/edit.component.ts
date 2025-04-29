@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 
-
 @Component({
   selector: 'app-edit',
   imports: [FormsModule, ButtonModule, CommonModule, ReactiveFormsModule],
@@ -20,9 +19,6 @@ export class EditComponent {
 
   id!: number;
   persona!: Persona;
-
-  listaPersone: Persona[] = [];
-
 
   form = new FormGroup({
     nome: new FormControl('', Validators.required),
@@ -51,10 +47,9 @@ export class EditComponent {
     this.persona.eta = Number(this.form.get('eta')?.value);
 
     this.listaPersoneService.updatePersona(this.persona, this.id).subscribe()
-    
-    /* this.listaPersoneService.getListaPersone().subscribe(response => {
-      this.listaPersone = response;
-    }); */
+
+    this.listaPersoneService.getListaPersone();
+
 
     this.router.navigate(['/list']);
 

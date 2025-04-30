@@ -1,0 +1,18 @@
+<form (ngSubmit)="aggiungiPersona()">
+    <p-iftalabel>
+        <input pInputText id="nome" [(ngModel)]="persona.nome" name="nome"/>
+        <label for="nome">Nome</label>
+    </p-iftalabel>
+    <p-iftalabel>
+        <input pInputText id="cognome" [(ngModel)]="persona.cognome" name="cognome"/>
+        <label for="cognome">Cognome</label>
+    </p-iftalabel>
+    <p-iftalabel>
+        <input pInputtext id="eta" [(ngModel)]="persona.eta" name="eta" />
+        <label for="eta">Età</label>
+    </p-iftalabel>
+
+    <p-button icon="pi pi-home"  margin-right="30px" onclick="goToList()"/>
+    <p-button type="submit" icon="pi pi-check" aria-label="Save" label="Conferma" />
+
+</form>

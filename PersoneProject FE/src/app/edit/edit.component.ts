@@ -7,10 +7,12 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MessageModule } from 'primeng/message';
+
 
 @Component({
   selector: 'app-edit',
-  imports: [FormsModule, ButtonModule, CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, ButtonModule, CommonModule, ReactiveFormsModule, MessageModule],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss'
 })
@@ -48,11 +50,7 @@ export class EditComponent {
 
     this.listaPersoneService.updatePersona(this.persona, this.id).subscribe()
 
-    this.listaPersoneService.getListaPersone();
-
-
     this.router.navigate(['/list']);
-
   }
 
 }

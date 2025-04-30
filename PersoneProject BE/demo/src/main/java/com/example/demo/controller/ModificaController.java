@@ -31,8 +31,7 @@ public class ModificaController {
     }
 
     @GetMapping("person/{id}")
-    public Persone getPersone(@PathVariable Long id) throws Exception {
-        System.out.println("sono nel controller su springboot ");
+    public Persone getPersona(@PathVariable Long id) throws Exception {
         return personeService.getPersona(id);
     }
 

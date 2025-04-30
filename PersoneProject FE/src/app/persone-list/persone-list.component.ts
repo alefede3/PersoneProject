@@ -39,6 +39,10 @@ export class PersoneListComponent implements OnInit{
   personaEdit!: Persona;
 
   ngOnInit(): void{
+    console.log("Component creato")
+
+    this.listaPersoneService.getListaPersone();
+
     this.listaPersoneService.getPersonePaginate(this.page, this.size).subscribe(response => {
       this.listaPersone = response;
 
@@ -89,5 +93,8 @@ export class PersoneListComponent implements OnInit{
     this.visible = false;
   }
 
-  
+  goToAdd(){
+    this.router.navigate(['aggiungi'])
+  }
+
 }

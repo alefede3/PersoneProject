@@ -39,7 +39,11 @@
         </tr>
     </ng-template>
 </p-table>
-<p-dialog header="Modifica Età" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem', height: '22rem'}">
+
+<p-button (onClick)="goToAdd()" icon="pi pi-user-plus" [rounded]="true" [text]="true" [raised]="true" severity="success"/>
+
+
+<p-dialog header="Modifica Età" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem', height: '24rem'}">
     <div style="margin-bottom: 1rem; text-align: left;">
         <span class="p-text-secondary" style="font-weight: normal;">Inserisci l'età:</span>
     </div>

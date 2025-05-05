@@ -39,9 +39,6 @@ export class PersoneListComponent implements OnInit{
   personaEdit!: Persona;
 
   ngOnInit(): void{
-    console.log("Component creato")
-
-    this.listaPersoneService.getListaPersone();
 
     this.listaPersoneService.getPersonePaginate(this.page, this.size).subscribe(response => {
       this.listaPersone = response;
@@ -56,7 +53,6 @@ export class PersoneListComponent implements OnInit{
   onPageChange(event: PaginatorState) {
     this.page = event.first!/event.rows!;
     this.size = event.rows!;
-    console.log("pagina", this.page, "num righe", this.size)
     this.listaPersoneService.getPersonePaginate(this.page, this.size).subscribe(response => {
       this.listaPersone = response;
     })   

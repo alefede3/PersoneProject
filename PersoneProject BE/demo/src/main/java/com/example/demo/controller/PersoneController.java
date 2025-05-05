@@ -12,11 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-
-
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -34,8 +29,9 @@ public class PersoneController {
 
     @GetMapping("/list/")
     public Page<Persone> personePaginate(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
-    Pageable pageable = PageRequest.of(page, size);
-    return personeService.getPersonePaginate(pageable);
+        Pageable pageable = PageRequest.of(page, size);
+
+        return personeService.getPersonePaginate(pageable);
     }
 
     @GetMapping("/list/filtroNome")
@@ -47,4 +43,10 @@ public class PersoneController {
     public List<Persone> filtraPersoneCognome(@RequestParam String inputCognome) {
         return personeService.getPersoneFiltrateCognome(inputCognome);
     }
+
+    @PostMapping("/add")
+    public void addPersona(@RequestBody Persone nuovaPersona) {
+        personeService.savePersona(nuovaPersona);
+    }
+
 }

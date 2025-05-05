@@ -8,6 +8,5 @@ export const routes: Routes = [
     { path: '', component: LoginComponent },
     { path: 'list', component: PersoneListComponent },
     { path: 'edit/:id', component: EditComponent },
-    { path: 'list', component: PersoneListComponent },
-    { path: 'aggiungi', component: PersoneListComponent },
+    { path: 'aggiungi', component: AggiungiPersonaComponent },
 ];

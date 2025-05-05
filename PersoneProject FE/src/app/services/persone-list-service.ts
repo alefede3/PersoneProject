@@ -10,45 +10,46 @@ import { Observable } from 'rxjs';
 )
 export class ListaPersoneService {
 
-  private listaPersoneAPIUrl = 'http://localhost:8080/list';
+  private PersoneAPIUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {}
 
-  nuovoNome: string = "";
-  nuovoCognome: string = "";
-  nuovaEta: number = 0;
-
-  getPersonePaginate(page: number, size: number): Observable<Persona[]>{
-    return this.http.get<Persona[]>('http://localhost:8080/list', {
+   getPersonePaginate(page: number, size: number): Observable<Persona[]>{
+    return this.http.get<Persona[]>(this.PersoneAPIUrl + '/list', {
       params: {page, size}
     })
   }
 
   getPersoneFiltrateNome(inputNome: string): Observable<Persona[]>{
-    return this.http.get<Persona[]>('http://localhost:8080/list/filtroNome', {
+    return this.http.get<Persona[]>(this.PersoneAPIUrl + '/list/filtroNome', {
       params: {inputNome}
     })
   }
 
   getPersoneFiltrateCognome(inputCognome: string): Observable<Persona[]>{
-    return this.http.get<Persona[]>('http://localhost:8080/list/filtroCognome', {
+    return this.http.get<Persona[]>(this.PersoneAPIUrl + '/list/filtroCognome', {
       params: {inputCognome}
     })
   }
 
   updatePersona(persona: Persona, id: number): Observable<void> {
-    return this.http.put<void>(`http://localhost:8080/person/${id}`, persona);
+    return this.http.put<void>(this.PersoneAPIUrl + `/person/${id}`, persona);
   }
 
   getPersona(id: number): Observable<Persona>{
-    return this.http.get<Persona>(`http://localhost:8080/person/${id}`)
+    return this.http.get<Persona>(this.PersoneAPIUrl + `/person/${id}`)
   }
 
   getListaPersone(): Observable<Persona[]>{
-    return this.http.get<Persona[]>(`http://localhost:8080/list`)
+    return this.http.get<Persona[]>(this.PersoneAPIUrl + '/list')
   }
    
   savePersona(persona: Persona): Observable<void>{
-    return this.http.put<void>(`http://localhost:8080/person`, persona)
+    return this.http.put<void>(this.PersoneAPIUrl + '/person', persona)
+  }
+
+  addPersona(nome: String, cognome: String, eta: number): Observable<void>{
+    return this.http.post<void>(this.PersoneAPIUrl + '/add', {nome, cognome, eta}
+    )
   }
 }

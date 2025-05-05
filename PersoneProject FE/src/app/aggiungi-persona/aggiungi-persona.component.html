@@ -1,18 +1,29 @@
-<form (ngSubmit)="aggiungiPersona()">
+<form [formGroup]="form" (ngSubmit)="aggiungiPersona()">
     <p-iftalabel>
-        <input pInputText id="nome" [(ngModel)]="nome" name="nome"/>
+        <input pInputText formControlName="nome"/>
+            <div *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched">
+                <p *ngIf="form.get('nome')?.hasError('required')">Il nome è obbligatorio.</p>
+            </div>
         <label for="nome">Nome</label>
     </p-iftalabel>
     <p-iftalabel>
-        <input pInputText id="cognome" [(ngModel)]="cognome" name="cognome"/>
+        <input pInputText formControlName="cognome"/>
+            <div *ngIf="form.get('cognome')?.invalid && form.get('cognome')?.touched">
+                <p *ngIf="form.get('cognome')?.hasError('required')">Il cognome è obbligatorio.</p>
+            </div>
         <label for="cognome">Cognome</label>
     </p-iftalabel>
     <p-iftalabel>
-        <input pInputText id="eta" [(ngModel)]="eta" name="eta" />
-        <label for="eta">Età</label>
+        <input pInputText formControlName="eta"/>
+            <div *ngIf="form.get('eta')?.invalid && form.get('eta')?.touched">
+                <p *ngIf="form.get('eta')?.hasError('required')">L'età è obbligatoria.</p>
+            </div>
+        <label for="eta">Eta</label>
     </p-iftalabel>
 
-    <p-button icon="pi pi-home"  (onClick)="goToList()"/>
-    <p-button type="submit" icon="pi pi-check" aria-label="Save" label="Conferma" />
+    <div style="display: flex; gap: 12px;">
+        <p-button icon="pi pi-home"  (onClick)="goToList()"/>
+        <p-button icon="pi pi-check" type="submit" [disabled]="form.invalid" aria-label="Save" label="Conferma"/>
+    </div>
 
 </form>

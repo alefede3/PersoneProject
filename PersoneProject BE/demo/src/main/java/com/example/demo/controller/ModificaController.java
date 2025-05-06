@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,13 +20,12 @@ public class ModificaController {
     private PersoneService personeService;
 
     @PutMapping("person/{id}")
-    public void updatePersona(@PathVariable Long id, @RequestBody Persone persone) throws Exception{
-        System.out.println("Persona passata all'invio " + persone);
+    public void updatePersona(@PathVariable Long id, @RequestBody Persone persona) throws Exception{
         Persone personaModificata = personeService.getPersona(id);
 
-        personaModificata.setNome(persone.getNome());
-        personaModificata.setCognome(persone.getCognome());
-        personaModificata.setEta(persone.getEta());
+        personaModificata.setNome(persona.getNome());
+        personaModificata.setCognome(persona.getCognome());
+        personaModificata.setEta(persona.getEta());
 
         personeService.savePersona(personaModificata);
     }
@@ -39,5 +39,11 @@ public class ModificaController {
     public void savePersona(@RequestBody Persone persona){
         Persone personaModificata = persona;
         personeService.savePersona(personaModificata);
+    }
+
+    @DeleteMapping("person/delete")
+    public void deletePersona(Long id){
+        System.out.println("id nel controller " + id);
+        personeService.deletePersona(id);
     }
 }

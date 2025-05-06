@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { ToolbarModule } from 'primeng/toolbar';
 
+
 @Component({
   selector: 'app-persone-list',
   imports: [TableModule, CommonModule, PaginatorModule, FormsModule, InputTextModule, DialogModule, ButtonModule, SelectModule, ToolbarModule],
@@ -38,11 +39,14 @@ export class PersoneListComponent implements OnInit{
 
   personaEdit!: Persona;
 
+  id: number = 0;
+
+  visibleDelete: boolean = false;
+
   ngOnInit(): void{
 
     this.listaPersoneService.getPersonePaginate(this.page, this.size).subscribe(response => {
       this.listaPersone = response;
-
     });
 
     for (let i = 1; i <= 100; i++) {
@@ -72,7 +76,6 @@ export class PersoneListComponent implements OnInit{
 
   goToEditPersona(persona: Persona){
     this.router.navigate([`/edit/${persona.id}`]);
-    console.log("persona passata ", persona) 
   }
 
   showDialog(persona: Persona) {
@@ -80,6 +83,12 @@ export class PersoneListComponent implements OnInit{
     this.etaSelezionata = persona.eta;
 
     this.visible = true;
+  }
+
+  showDialogDelete(persona: Persona){
+    this.personaEdit = persona;
+
+    this.visibleDelete  = true;
   }
 
   savePersona(persona: Persona) {
@@ -93,4 +102,13 @@ export class PersoneListComponent implements OnInit{
     this.router.navigate(['aggiungi'])
   }
 
+  deletePersona(persona: Persona){
+    this.listaPersoneService.deletePersona(persona.id).subscribe(() => {
+      this.visibleDelete = false;
+      this.listaPersoneService.getPersonePaginate(this.page, this.size).subscribe(response => {
+        this.listaPersone = response;
+      });
+    });    
+  }
+  
 }

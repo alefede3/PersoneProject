@@ -8,11 +8,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MessageModule } from 'primeng/message';
-
+import { IftaLabelModule } from 'primeng/iftalabel';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-edit',
-  imports: [FormsModule, ButtonModule, CommonModule, ReactiveFormsModule, MessageModule],
+  imports: [FormsModule, ButtonModule, CommonModule, ReactiveFormsModule, MessageModule, IftaLabelModule, InputTextModule],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss'
 })
@@ -48,9 +49,9 @@ export class EditComponent {
     this.persona.cognome = this.form.get('cognome')?.value ?? '';
     this.persona.eta = Number(this.form.get('eta')?.value);
 
-    this.listaPersoneService.updatePersona(this.persona, this.id).subscribe()
-
-    this.router.navigate(['/list']);
+    this.listaPersoneService.updatePersona(this.persona, this.id).subscribe(() => {
+      this.router.navigate(['list']);
+    })
   }
 
 }

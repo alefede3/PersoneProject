@@ -19,7 +19,6 @@
                 </p>
             </th>
             <th style="width:25%">Età</th>
-            <th style="width:25%">Modifica</th>
         </tr>
     </ng-template>
     <ng-template #body let-persona>
@@ -35,13 +34,15 @@
             <td>
                 <i (click)="goToEditPersona(persona)" class="pi pi-user-edit" style="font-size: 1rem"></i>
             </td>
+            <td>
+                <i (click)="showDialogDelete(persona)" class="pi pi-user-minus" style="font-size: 1rem"></i>
+            </td>
             
         </tr>
     </ng-template>
 </p-table>
 
 <p-button (onClick)="goToAdd()" icon="pi pi-user-plus" [rounded]="true" [text]="true" [raised]="true" severity="success"/>
-
 
 <p-dialog header="Modifica Età" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem', height: '24rem'}">
     <div style="margin-bottom: 1rem; text-align: left;">
@@ -54,8 +55,19 @@
             </div>
         </div>
         <div style="display: flex; justify-content: flex-end; gap: 1rem; width: 100%; margin-top: 1rem;">
-            <p-button label="Cancel" severity="secondary" (click)="visible = false" />
-            <p-button label="Save" (click)="savePersona(personaEdit)" />
+            <p-button label="Indietro" severity="secondary" (click)="visible = false" />
+            <p-button label="Salva" (click)="savePersona(personaEdit)" />
         </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="Eliminare Persona?" [modal]="true" [(visible)]="visibleDelete" [style]="{ width: '25rem' }">
+    <span class="p-text-secondary block mb-8">Sei sicuro di voler eliminare la seguente persona?</span>
+    <div *ngIf="personaEdit" style="margin-top: 15px;">
+        <div>{{ personaEdit.nome }} {{ personaEdit.cognome }} {{ personaEdit.eta }}</div>
+    </div>
+    <div class="flex justify-end gap-2" style="margin-top: 30px;">
+        <p-button label="Indietro" severity="secondary" (click)="visibleDelete = false" />
+        <p-button label="Elimina" (click)="deletePersona(personaEdit)" />
     </div>
 </p-dialog>

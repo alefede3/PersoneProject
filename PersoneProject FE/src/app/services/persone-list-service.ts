@@ -14,7 +14,7 @@ export class ListaPersoneService {
 
   constructor(private http: HttpClient) {}
 
-   getPersonePaginate(page: number, size: number): Observable<Persona[]>{
+  getPersonePaginate(page: number, size: number): Observable<Persona[]>{
     return this.http.get<Persona[]>(this.PersoneAPIUrl + '/list', {
       params: {page, size}
     })
@@ -51,5 +51,11 @@ export class ListaPersoneService {
   addPersona(nome: String, cognome: String, eta: number): Observable<void>{
     return this.http.post<void>(this.PersoneAPIUrl + '/add', {nome, cognome, eta}
     )
+  }
+
+  deletePersona(id: number): Observable<void>{
+    return this.http.delete<void>(this.PersoneAPIUrl + '/person/delete', {
+      params: {id}
+    })
   }
 }

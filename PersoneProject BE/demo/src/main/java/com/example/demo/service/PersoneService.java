@@ -46,4 +46,8 @@ public class PersoneService {
     public List<Persone> getPersoneFiltrateCognome(String inputCognome){
         return personeRepository.searchByCognomeLike(inputCognome);
     }
+
+    public void deletePersona(Long id){
+        personeRepository.deleteById(id);
+    }
 }

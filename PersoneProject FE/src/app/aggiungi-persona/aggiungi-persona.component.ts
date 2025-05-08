@@ -30,9 +30,12 @@ export class AggiungiPersonaComponent {
     eta: new FormControl('', Validators.required),
   })
 
-  nome: String = "";
-  cognome: String = "";
+  nome: string = "";
+  cognome: string = "";
   eta!: number;
+  nomeInput: string = "";
+  cognomeInput: string = "";
+
 
   aggiungiPersona(){
 
@@ -41,8 +44,8 @@ export class AggiungiPersonaComponent {
     this.eta = Number(this.form.get('eta')?.value);
 
     this.listaPersoneService.addPersona(this.nome, this.cognome, this.eta).subscribe(() => {
-      this.listaPersoneService.getPersonePaginate(this.page, this.size).subscribe(response => {
-        this.listaPersone = response;
+      this.listaPersoneService.getPersonePaginate(this.page, this.size, this.nomeInput, this.cognomeInput).subscribe(response => {
+        this.listaPersone = response.content;
       });
     })
     this.router.navigate(['list']);

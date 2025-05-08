@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Persona } from '../models/persona';
+import { Persona, PersonaResponse } from '../models/persona';
 import { Observable } from 'rxjs';
 
 @Injectable(
@@ -14,13 +14,13 @@ export class ListaPersoneService {
 
   constructor(private http: HttpClient) {}
 
-  getPersonePaginate(page: number, size: number): Observable<Persona[]>{
-    return this.http.get<Persona[]>(this.PersoneAPIUrl + '/list', {
-      params: {page, size}
+  getPersonePaginate(page: number, size: number, nomeInput: string, cognomeInput: string): Observable<PersonaResponse>{
+    return this.http.get<PersonaResponse>(this.PersoneAPIUrl + '/list', {
+      params: {page, size, nomeInput, cognomeInput}
     })
   }
 
-  getPersoneFiltrateNome(inputNome: string): Observable<Persona[]>{
+  /* getPersoneFiltrateNome(inputNome: string): Observable<Persona[]>{
     return this.http.get<Persona[]>(this.PersoneAPIUrl + '/list/filtroNome', {
       params: {inputNome}
     })
@@ -30,7 +30,7 @@ export class ListaPersoneService {
     return this.http.get<Persona[]>(this.PersoneAPIUrl + '/list/filtroCognome', {
       params: {inputCognome}
     })
-  }
+  } */
 
   updatePersona(persona: Persona, id: number): Observable<void> {
     return this.http.put<void>(this.PersoneAPIUrl + `/person/${id}`, persona);
@@ -44,8 +44,8 @@ export class ListaPersoneService {
     return this.http.get<Persona[]>(this.PersoneAPIUrl + '/list')
   }
    
-  savePersona(persona: Persona): Observable<void>{
-    return this.http.put<void>(this.PersoneAPIUrl + '/person', persona)
+  savePersona(persona: Persona, id: number): Observable<void>{
+    return this.http.put<void>(this.PersoneAPIUrl + `/person/${id}`, persona)
   }
 
   addPersona(nome: String, cognome: String, eta: number): Observable<void>{

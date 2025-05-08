@@ -34,18 +34,18 @@ public class PersoneService {
         throw new Exception("error 404");
     }
 
-    public Page<Persone> getPersonePaginate(Pageable pageable){
-        Page<Persone> personePage = personeRepository.trovaPersonePaginate(pageable);
+    public Page<Persone> getPersonePaginateEFiltrate(String nomeInput, String cognomeInput, Pageable pageable){
+        Page<Persone> personePage = personeRepository.trovaPersonePaginateEFiltrate(nomeInput, cognomeInput, pageable);
         return personePage;
     }
 
-    public List<Persone> getPersoneFiltrateNome(String inputNome){
+    /* public List<Persone> getPersoneFiltrateNome(String inputNome){
         return personeRepository.searchByNomeLike(inputNome);
     }
 
     public List<Persone> getPersoneFiltrateCognome(String inputCognome){
-        return personeRepository.searchByCognomeLike(inputCognome);
-    }
+        return personeRepository.searchByCognomeLike(inputCognome); 
+    } */
 
     public void deletePersona(Long id){
         personeRepository.deleteById(id);

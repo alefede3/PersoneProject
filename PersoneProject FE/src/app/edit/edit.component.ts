@@ -11,6 +11,13 @@ import { MessageModule } from 'primeng/message';
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { InputTextModule } from 'primeng/inputtext';
 
+interface PersonaForm {
+  nome: FormControl<string | null>;
+  cognome: FormControl<string | null>;
+  eta: FormControl<number | null >;
+  id: FormControl<number | null>;
+}
+
 @Component({
   selector: 'app-edit',
   imports: [FormsModule, ButtonModule, CommonModule, ReactiveFormsModule, MessageModule, IftaLabelModule, InputTextModule],
@@ -23,11 +30,12 @@ export class EditComponent {
   id!: number;
   persona!: Persona;
 
-  form = new FormGroup({
-    nome: new FormControl('', Validators.required),
+  form = new FormGroup<PersonaForm>({
+    nome: new FormControl('',  Validators.required),
     cognome: new FormControl('', Validators.required),
-    eta: new FormControl('', Validators.required),
-  })
+    eta: new FormControl(null, Validators.required),
+    id: new FormControl(null, Validators.required),
+  });
 
   ngOnInit(): void {
     this.id = +this.route.snapshot.paramMap.get('id')!;
@@ -38,7 +46,8 @@ export class EditComponent {
      this.form.patchValue({
       nome: this.persona.nome,
       cognome: this.persona.cognome,
-      eta: this.persona.eta.toString()
+      eta: this.persona.eta,
+      id: this.persona.id,
      })
     });
   }
@@ -49,7 +58,7 @@ export class EditComponent {
     this.persona.cognome = this.form.get('cognome')?.value ?? '';
     this.persona.eta = Number(this.form.get('eta')?.value);
 
-    this.listaPersoneService.updatePersona(this.persona, this.id).subscribe(() => {
+    this.listaPersoneService.updatePersona(this.form.getRawValue() as Persona, this.id).subscribe(() => {
       this.router.navigate(['list']);
     })
   }

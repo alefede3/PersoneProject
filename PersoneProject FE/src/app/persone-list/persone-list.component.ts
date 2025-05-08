@@ -27,10 +27,10 @@ export class PersoneListComponent implements OnInit{
 
   page: number = 0;
   size: number = 10;
-  totalRecords: number = this.listaPersone.length;
+  totalRecords!: number;
 
-  nomeInput: string="";
-  cognomeInput: string="";
+  nomeInput: string = "";
+  cognomeInput: string = "";
 
   visible: boolean = false;
 
@@ -44,9 +44,12 @@ export class PersoneListComponent implements OnInit{
   visibleDelete: boolean = false;
 
   ngOnInit(): void{
+    this.listaPersoneService.getPersonePaginate(this.page, this.size, this.nomeInput, this.cognomeInput).subscribe(response => {
+      this.listaPersone = response.content;
+      this.totalRecords = response.totalElements;
+      console.log("total records ", this.totalRecords)
 
-    this.listaPersoneService.getPersonePaginate(this.page, this.size).subscribe(response => {
-      this.listaPersone = response;
+
     });
 
     for (let i = 1; i <= 100; i++) {
@@ -57,22 +60,34 @@ export class PersoneListComponent implements OnInit{
   onPageChange(event: PaginatorState) {
     this.page = event.first!/event.rows!;
     this.size = event.rows!;
-    this.listaPersoneService.getPersonePaginate(this.page, this.size).subscribe(response => {
-      this.listaPersone = response;
+    this.listaPersoneService.getPersonePaginate(this.page, this.size, this.nomeInput, this.cognomeInput).subscribe(response => {
+      this.listaPersone = response.content;
     })   
   }
 
-  filtraNome(){
-    this.listaPersoneService.getPersoneFiltrateNome(this.nomeInput).subscribe(response => {
-      this.listaPersone = response;
+  /* filtraNome(){
+    this.listaPersoneService.getPersonePaginate(this.page, this.size, this.nomeInput, this.cognomeInput).subscribe(response => {
+      this.listaPersone = response.content;
     })
   }
 
-  filtraCognome(){
+  filtraNome(){
+    this.listaPersoneService.getPersonePaginate(this.page, this.size, this.nomeInput, this.cognomeInput).subscribe(response => {
+      this.listaPersone = response.content;
+    })
+  } */
+
+  filtra(){
+    this.listaPersoneService.getPersonePaginate(this.page, this.size, this.nomeInput, this.cognomeInput).subscribe(response => {
+      this.listaPersone = response.content;
+    })
+  }
+
+  /* filtraCognome(){
     this.listaPersoneService.getPersoneFiltrateCognome(this.cognomeInput).subscribe(response => {
       this.listaPersone = response;
     })
-  }
+  } */
 
   goToEditPersona(persona: Persona){
     this.router.navigate([`/edit/${persona.id}`]);
@@ -94,7 +109,7 @@ export class PersoneListComponent implements OnInit{
   savePersona(persona: Persona) {
     persona.eta = this.etaSelezionata;
 
-    this.listaPersoneService.savePersona(persona).subscribe();    
+    this.listaPersoneService.savePersona(persona, persona.id).subscribe();    
     this.visible = false;
   }
 
@@ -105,8 +120,8 @@ export class PersoneListComponent implements OnInit{
   deletePersona(persona: Persona){
     this.listaPersoneService.deletePersona(persona.id).subscribe(() => {
       this.visibleDelete = false;
-      this.listaPersoneService.getPersonePaginate(this.page, this.size).subscribe(response => {
-        this.listaPersone = response;
+      this.listaPersoneService.getPersonePaginate(this.page, this.size, this.nomeInput, this.cognomeInput).subscribe(response => {
+        this.listaPersone = response.content;
       });
     });    
   }

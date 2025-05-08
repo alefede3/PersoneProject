@@ -4,3 +4,8 @@ export interface Persona{
     cognome: string;
     eta: number;
 }
+
+export interface PersonaResponse{
+    content: Persona[];
+    totalElements: number;
+}

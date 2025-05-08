@@ -1,21 +1,20 @@
 <p-table [value]="listaPersone" 
         [rowsPerPageOptions]="[10,20,30]"
         [paginator]="true"
-        [rows]="10"
-        [totalRecords]="totalRecords"
+        [rows]="size"
         [showCurrentPageReport]="true"
-        currentPageReportTemplate="{first} - {last} of {totalRecords}"
+        currentPageReportTemplate=" {{totalRecords}}"
         (onPage)="onPageChange($event)">
     <ng-template #header>
         <tr>
             <th style="width:25%">Nome
                 <p>
-                    <input type="text" pInputText [(ngModel)]="nomeInput" placeholder="Cerca" (keyup.enter)="filtraNome()" pSize="small" />
+                    <input type="text" pInputText [(ngModel)]="nomeInput" placeholder="Cerca" (keyup.enter)="filtra()" pSize="small" />
                 </p>   
             </th>
             <th style="width:25%">Cognome
                 <p>
-                    <input type="text" pInputText [(ngModel)]="cognomeInput" placeholder="Cerca" (keyup.enter)="filtraCognome()" pSize="small" />
+                    <input type="text" pInputText [(ngModel)]="cognomeInput" placeholder="Cerca" (keyup.enter)="filtra()" pSize="small" />
                 </p>
             </th>
             <th style="width:25%">Età</th>
@@ -32,10 +31,11 @@
                 </div> 
             </td>
             <td>
-                <i (click)="goToEditPersona(persona)" class="pi pi-user-edit" style="font-size: 1rem"></i>
+                <p-button (click)="goToEditPersona(persona)" icon="pi pi-user-edit" [rounded]="true" [text]="true" [raised]="true" />
+
             </td>
             <td>
-                <i (click)="showDialogDelete(persona)" class="pi pi-user-minus" style="font-size: 1rem"></i>
+                <p-button (click)="showDialogDelete(persona)" icon="pi pi-user-minus" [rounded]="true" [text]="true" [raised]="true" />
             </td>
             
         </tr>
@@ -64,7 +64,7 @@
 <p-dialog header="Eliminare Persona?" [modal]="true" [(visible)]="visibleDelete" [style]="{ width: '25rem' }">
     <span class="p-text-secondary block mb-8">Sei sicuro di voler eliminare la seguente persona?</span>
     <div *ngIf="personaEdit" style="margin-top: 15px;">
-        <div>{{ personaEdit.nome }} {{ personaEdit.cognome }} {{ personaEdit.eta }}</div>
+        <div>{{ personaEdit.nome }} {{ personaEdit.cognome }} di anni {{ personaEdit.eta }}</div>
     </div>
     <div class="flex justify-end gap-2" style="margin-top: 30px;">
         <p-button label="Indietro" severity="secondary" (click)="visibleDelete = false" />

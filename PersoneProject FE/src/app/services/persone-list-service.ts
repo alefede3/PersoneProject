@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Persona, PersonaResponse } from '../models/persona';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Persona, PersonaQueryParams, PersonaResponse } from '../models/persona';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 
 @Injectable(
   {
@@ -14,23 +14,20 @@ export class ListaPersoneService {
 
   constructor(private http: HttpClient) {}
 
-  getPersonePaginate(page: number, size: number, nomeInput: string, cognomeInput: string): Observable<PersonaResponse>{
-    return this.http.get<PersonaResponse>(this.PersoneAPIUrl + '/list', {
-      params: {page, size, nomeInput, cognomeInput}
-    })
-  }
+  totalPersons = new Observable<number>();
 
-  /* getPersoneFiltrateNome(inputNome: string): Observable<Persona[]>{
-    return this.http.get<Persona[]>(this.PersoneAPIUrl + '/list/filtroNome', {
-      params: {inputNome}
-    })
-  }
+  getPersonePaginate(personeObject: PersonaQueryParams): Observable<PersonaResponse> {
 
-  getPersoneFiltrateCognome(inputCognome: string): Observable<Persona[]>{
-    return this.http.get<Persona[]>(this.PersoneAPIUrl + '/list/filtroCognome', {
-      params: {inputCognome}
-    })
-  } */
+  let personePaginateParams = new HttpParams();
+
+  Object.entries(personeObject).forEach(([key, value]) => {
+    if (value !== null && value !== undefined && value !== '') {
+      personePaginateParams = personePaginateParams.set(key, value.toString());
+    }
+  });
+
+  return this.http.get<PersonaResponse>(this.PersoneAPIUrl + '/list', { params: personePaginateParams });
+  }
 
   updatePersona(persona: Persona, id: number): Observable<void> {
     return this.http.put<void>(this.PersoneAPIUrl + `/person/${id}`, persona);
@@ -40,16 +37,16 @@ export class ListaPersoneService {
     return this.http.get<Persona>(this.PersoneAPIUrl + `/person/${id}`)
   }
 
-  getListaPersone(): Observable<Persona[]>{
-    return this.http.get<Persona[]>(this.PersoneAPIUrl + '/list')
+  getNumberListaPersoneLength(): Observable<number>{
+    return this.http.get<number>(this.PersoneAPIUrl + '/list/size')
   }
    
   savePersona(persona: Persona, id: number): Observable<void>{
     return this.http.put<void>(this.PersoneAPIUrl + `/person/${id}`, persona)
   }
 
-  addPersona(nome: String, cognome: String, eta: number): Observable<void>{
-    return this.http.post<void>(this.PersoneAPIUrl + '/add', {nome, cognome, eta}
+  addPersona(aggiungiPersonaObject: Persona): Observable<void>{
+    return this.http.post<void>(this.PersoneAPIUrl + '/add', aggiungiPersonaObject 
     )
   }
 
@@ -57,5 +54,9 @@ export class ListaPersoneService {
     return this.http.delete<void>(this.PersoneAPIUrl + '/person/delete', {
       params: {id}
     })
+  }
+
+  numeroPersoneUpdated(numeroAggiornato: number){
+    this.totalPersons = of(numeroAggiornato);
   }
 }

@@ -20,6 +20,27 @@
             </div>
         <label for="eta">Eta</label>
     </p-iftalabel>
+    <p-iftalabel>
+        <input pInputText formControlName="luogo_di_nascita"/>
+            <div *ngIf="form.get('luogo_di_nascita')?.invalid && form.get('luogo_di_nascita')?.touched">
+                <p *ngIf="form.get('luogo_di_nascita')?.hasError('required')">Il luogo di nascita è obbligatorio.</p>
+            </div>
+        <label for="luogo_di_nascita">Luogo di nascita</label>
+    </p-iftalabel>
+    <p-iftalabel>
+        <input pInputText formControlName="citta"/>
+            <div *ngIf="form.get('citta')?.invalid && form.get('citta')?.touched">
+                <p *ngIf="form.get('citta')?.hasError('required')">La città è obbligatoria.</p>
+            </div>
+        <label for="eta">Città attuale</label>
+    </p-iftalabel>
+    <p-iftalabel>
+        <input pInputText formControlName="indirizzo"/>
+            <div *ngIf="form.get('indirizzo')?.invalid && form.get('indirizzo')?.touched">
+                <p *ngIf="form.get('indirizzo')?.hasError('required')">L'indirizzo è obbligatorio.</p>
+            </div>
+        <label for="eta">Indirizzo</label>
+    </p-iftalabel>
 
     <div style="display: flex; gap: 12px;">
         <p-button icon="pi pi-home"  (onClick)="goToList()"/>

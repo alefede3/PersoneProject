@@ -1,12 +1,17 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { PersoneListComponent } from './persone-list/persone-list.component';
-import { EditComponent } from './edit/edit.component';
-import { AggiungiPersonaComponent } from './aggiungi-persona/aggiungi-persona.component';
+import { LoginComponent } from './component/login/login.component';
+import { PersoneListComponent } from './component/persone-list/persone-list.component';
+import { AggiungiPersonaComponent } from './component/aggiungi-persona/aggiungi-persona.component';
+import { AddEditPersonaComponent } from './component/add-edit-persona/add-edit-persona.component';
+import { ProgettiListComponent } from './component/progetti-list/progetti-list.component';
+import { TabsComponent } from './component/tabs/tabs.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
     { path: 'list', component: PersoneListComponent },
-    { path: 'edit/:id', component: EditComponent },
-    { path: 'aggiungi', component: AggiungiPersonaComponent },
+    { path: 'edit/:id', component: AddEditPersonaComponent },
+    { path: 'create', component: AddEditPersonaComponent },
+    { path: 'userList', component: PersoneListComponent},
+    { path: 'projectsList', component: ProgettiListComponent},
+    { path: 'tabs', component: TabsComponent}
 ];

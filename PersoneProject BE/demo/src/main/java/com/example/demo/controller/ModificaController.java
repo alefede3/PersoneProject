@@ -26,6 +26,9 @@ public class ModificaController {
         personaModificata.setNome(persona.getNome());
         personaModificata.setCognome(persona.getCognome());
         personaModificata.setEta(persona.getEta());
+        personaModificata.setLuogo_di_nascita(persona.getLuogo_di_nascita());
+        personaModificata.setCitta(persona.getCitta());
+        personaModificata.setIndirizzo(persona.getIndirizzo());
 
         personeService.savePersona(personaModificata);
     }

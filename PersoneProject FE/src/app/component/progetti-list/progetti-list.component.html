@@ -1,0 +1,52 @@
+<p-table
+    [value]="listaProgetti"
+    [paginator]="true"
+    [rows]="5"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rowsPerPageOptions]="[5, 10, 20]"
+>
+    <ng-template #header>
+        <tr>
+            <th>Id
+                <p>
+                    <input type="number" pInputText [(ngModel)]="progettoParams.id_progettoInput" placeholder="Cerca" (keyup.enter)="filtraProgetto()" pSize="small" style="width: 100%;"/>
+                </p>
+            </th>
+            <th>Nome
+                <p>
+                    <input type="string" pInputText [(ngModel)]="progettoParams.nome_progettoInput" placeholder="Cerca" (keyup.enter)="filtraProgetto()" pSize="small" style="width: 100%;"/>
+                </p>
+            </th>
+            <th>Descrizione
+                <p>
+                    <input type="string" pInputText [(ngModel)]="progettoParams.descrizione_progettoInput" placeholder="Cerca" (keyup.enter)="filtraProgetto()" pSize="small" style="width: 100%;"/>
+                </p>
+            </th>
+            <th>Data di inizio
+                <p>
+                    <input type="string" pInputText [(ngModel)]="progettoParams.data_inizioInput" placeholder="Cerca" (keyup.enter)="filtraProgetto()" pSize="small" style="width: 100%;"/>
+                </p>
+            </th>
+            <th>Data di fine
+                <p>
+                    <input type="string" pInputText [(ngModel)]="progettoParams.data_fineInput" placeholder="Cerca" (keyup.enter)="filtraProgetto()" pSize="small" style="width: 100%;"/>
+                </p>
+            </th>
+            <th>Budget
+                <p>
+                    <input type="number" pInputText [(ngModel)]="progettoParams.budgetInput" placeholder="Cerca" (keyup.enter)="filtraProgetto()" pSize="small" style="width: 100%;"/>
+                </p>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-progetto>
+        <tr>
+            <td>{{ progetto.id_progetto }}</td>
+            <td>{{ progetto.nome_progetto }}</td>
+            <td>{{ progetto.descrizione_progetto }}</td>
+            <td>{{ progetto.data_inizio }}</td>
+            <td>{{ progetto.data_fine }}</td>
+            <td>{{ progetto.data_inizio }}</td>
+        </tr>
+    </ng-template>
+</p-table>

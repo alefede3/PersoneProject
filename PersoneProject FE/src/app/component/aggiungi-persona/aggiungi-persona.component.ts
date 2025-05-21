@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { ListaPersoneService } from '../services/persone-list-service';
+import { ListaPersoneService } from '../../services/persone-list-service';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
-import { Persona } from '../models/persona';
+import { Persona, PersonaQueryParams } from '../../models/persona';
 
 
 @Component({
@@ -19,35 +19,18 @@ export class AggiungiPersonaComponent {
 
   constructor(private listaPersoneService: ListaPersoneService, private router: Router){}
 
-  listaPersone: Persona[] = [];
-  
-  page: number = 0;
-  size: number = 10;
-
   form = new FormGroup({
-    nome: new FormControl('', Validators.required),
+    id: new FormControl(null),
+    nome: new FormControl<string>('', Validators.required),
     cognome: new FormControl('', Validators.required),
-    eta: new FormControl('', Validators.required),
+    eta: new FormControl(null, Validators.required),
+    luogo_di_nascita: new FormControl('', Validators.required),
+    citta: new FormControl('', Validators.required),
+    indirizzo: new FormControl('', Validators.required),
   })
 
-  nome: string = "";
-  cognome: string = "";
-  eta!: number;
-  nomeInput: string = "";
-  cognomeInput: string = "";
-
-
   aggiungiPersona(){
-
-    this.nome = this.form.get('nome')?.value ?? '';
-    this.cognome = this.form.get('cognome')?.value ?? '';
-    this.eta = Number(this.form.get('eta')?.value);
-
-    this.listaPersoneService.addPersona(this.nome, this.cognome, this.eta).subscribe(() => {
-      this.listaPersoneService.getPersonePaginate(this.page, this.size, this.nomeInput, this.cognomeInput).subscribe(response => {
-        this.listaPersone = response.content;
-      });
-    })
+    this.listaPersoneService.addPersona(this.form.getRawValue()).subscribe(() => {})
     this.router.navigate(['list']);
   }
 

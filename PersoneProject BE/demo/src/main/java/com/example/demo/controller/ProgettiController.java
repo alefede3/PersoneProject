@@ -29,7 +29,7 @@ public class ProgettiController{
 
     @PostMapping("project/add")
     public void addProject(@RequestBody Progetto progetto) {
-        
+
         progettiService.addProject(progetto);
     }
 

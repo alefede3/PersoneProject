@@ -3,7 +3,7 @@
         <p-tab value="0" class="flex items-center !gap-2">
             <span class="font-bold whitespace-nowrap">Anagrafica</span>
         </p-tab>
-        <p-tab value="1" class="flex items-center !gap-2">
+        <p-tab value="1" class="flex items-center !gap-2" [disabled]="!checkId">
             <span class="font-bold whitespace-nowrap">Associazioni</span>
         </p-tab>
     </p-tablist>
@@ -12,7 +12,6 @@
             <app-add-edit-persona></app-add-edit-persona>
         </p-tabpanel>
         <p-tabpanel value="1">
-            
         </p-tabpanel>
     </p-tabpanels>
 </p-tabs>

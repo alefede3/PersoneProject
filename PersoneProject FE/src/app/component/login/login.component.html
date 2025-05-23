@@ -1,5 +1,6 @@
 <form (ngSubmit)="login()">
-    <div class="flex justify-center items-center mt-30 flex flex-col gap-2">        
+    <div class="flex justify-center items-center mt-30 ">
+      <div class="flex justify-center flex-col gap-2">
             <p-iftalabel>
                 <input pInputText id="username" [(ngModel)]="username" name="nome" autocomplete="off"/>
                 <label for="username">Username</label>
@@ -8,8 +9,9 @@
                 <input pInputText type="password" id="password" [(ngModel)]="password" name="password" />
                 <label for="password">Password</label>
             </p-iftalabel>
-            <div class="justify-self-end">
+            <div class="flex justify-end">
                 <p-button type="submit" label="Accedi"/>
             </div>
+      </div>
     </div>
 </form>

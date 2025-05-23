@@ -1,5 +1,5 @@
-import { Component, input, OnInit } from '@angular/core';
-import { Persona, PersonaQueryParams, Pippo } from '../../models/persona';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Persona, PersonaQueryParams } from '../../models/persona';
 import { TableModule } from 'primeng/table';
 import { ListaPersoneService } from '../../services/persone-list-service';
 import { CommonModule } from '@angular/common';
@@ -13,6 +13,7 @@ import { SelectModule } from 'primeng/select';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { MenuItem } from 'primeng/api';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-persone-list',
@@ -22,7 +23,8 @@ import { MenuItem } from 'primeng/api';
   templateUrl: './persone-list.component.html',
   styleUrl: './persone-list.component.scss'
 })
-export class PersoneListComponent implements OnInit{
+export class PersoneListComponent implements OnInit, OnDestroy{
+
   constructor(private listaPersoneService: ListaPersoneService, private router: Router){}
 
   listaPersone: Persona[] = [];
@@ -35,6 +37,8 @@ export class PersoneListComponent implements OnInit{
   totalRecords!: number;
 
   personeParams: PersonaQueryParams = this.inizializzaPersoneParams();
+
+  sub = new Subscription();
 
  inizializzaPersoneParams(): PersonaQueryParams {
     return {
@@ -49,9 +53,6 @@ export class PersoneListComponent implements OnInit{
       indirizzoInput: ""
     }
   }
-
-  etaSelezionabili: number[] = [];
-  etaSelezionata: number = 0;
 
   personaEdit!: Persona;
   personaSelezionata!: Persona;
@@ -77,7 +78,7 @@ export class PersoneListComponent implements OnInit{
     this.listaPersoneService.getPersonePaginate(this.personeParams).subscribe(response => {
       this.listaPersone = response.content;
       this.totalRecords = response.totalElements;
-      
+
       this.listaPersoneService.numeroPersoneUpdated(response.totalElements);
     });
   }
@@ -92,7 +93,7 @@ export class PersoneListComponent implements OnInit{
       this.totalRecords = response.totalElements;
 
       this.listaPersoneService.numeroPersoneUpdated(response.totalElements);
-    })   
+    })
   }
 
   filtra(){
@@ -111,11 +112,11 @@ export class PersoneListComponent implements OnInit{
 
   goToEditPersona(persona: Persona){
     persona = this.personaSelezionata;
-    this.router.navigate([`/edit/${persona.id}`]);
+    this.router.navigate([`/tabs/${persona.id}`]);
   }
 
   goToAddPersona(){
-    this.router.navigate(['create'])
+    this.router.navigate(['tabs'])
   }
 
   showDialogDelete(persona: Persona){
@@ -136,5 +137,9 @@ export class PersoneListComponent implements OnInit{
 
     this.visibleDelete = false;
     this.visibleOption = false;
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

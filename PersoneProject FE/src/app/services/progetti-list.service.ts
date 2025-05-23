@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProgettoQueryParams, ProgettoResponse } from '../models/progetto';
+import {Progetto, ProgettoQueryParams, ProgettoResponse} from '../models/progetto';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 
@@ -22,5 +22,23 @@ export class ProgettiListService {
     });
 
     return this.http.get<ProgettoResponse>(this.ProgettiAPIUrl + '/projects/list', {params: progettiPaginatiParams})
+  }
+
+  deleteProject(id_progetto: number): Observable<void>{
+    return this.http.delete<void>(this.ProgettiAPIUrl + '/project/delete', {
+      params: {id_progetto}
+    })
+  }
+
+  getProject(id_progetto: number): Observable<Progetto>{
+    return this.http.get<Progetto>(this.ProgettiAPIUrl + `/project/${id_progetto}`)
+  }
+
+  addProject(progetto: Progetto): Observable<void>{
+    return this.http.post<void>(this.ProgettiAPIUrl + '/project/add', progetto)
+  }
+
+  updateProject(progetto: Progetto, id_progetto: number): Observable<void>{
+    return this.http.put<void>(this.ProgettiAPIUrl + `/project/update/${id_progetto}`, progetto)
   }
 }

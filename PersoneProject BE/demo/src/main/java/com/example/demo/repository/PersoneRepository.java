@@ -25,9 +25,4 @@ public interface PersoneRepository extends JpaRepository<Persone, Long> {
                     @Param("id") Long id, @Param("eta") Integer eta, @Param("luogo_di_nascita") String luogo_di_nascita, 
                     @Param("citta") String citta, @Param("indirizzo") String indirizzo, Pageable pageable);
 
-    /* @Query("SELECT p FROM Persone p WHERE p.nome LIKE %:nome%")
-    List<Persone> searchByNomeLike(@Param("nome") String nome);
-
-    @Query("SELECT p FROM Persone p WHERE p.cognome LIKE %:cognome%")
-    List<Persone> searchByCognomeLike(@Param("cognome") String cognome); */
 }

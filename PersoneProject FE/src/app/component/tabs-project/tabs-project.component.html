@@ -1,0 +1,17 @@
+<p-tabs value="0" scrollable>
+  <p-tablist>
+    <p-tab value="0" class="flex items-center !gap-2">
+      <span class="font-bold whitespace-nowrap">Dettagli</span>
+    </p-tab>
+    <p-tab value="1" class="flex items-center !gap-2" [disabled]="!checkId">
+      <span class="font-bold whitespace-nowrap">Associazioni</span>
+    </p-tab>
+  </p-tablist>
+  <p-tabpanels>
+    <p-tabpanel value="0">
+      <app-add-edit-project></app-add-edit-project>
+    </p-tabpanel>
+    <p-tabpanel value="1">
+    </p-tabpanel>
+  </p-tabpanels>
+</p-tabs>

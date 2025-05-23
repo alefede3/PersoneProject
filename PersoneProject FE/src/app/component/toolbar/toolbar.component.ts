@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { ListaPersoneService } from '../../services/persone-list-service';
 import { ToolbarModule } from 'primeng/toolbar';
-import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -16,7 +14,7 @@ import { SidebarModule } from 'primeng/sidebar';
 })
 export class ToolbarComponent {
 
-  constructor(public listaPersoneService: ListaPersoneService, private router: Router ) {}
+  constructor(private router: Router ) {}
 
   sidebarVisible: boolean = false;
 

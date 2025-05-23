@@ -8,7 +8,7 @@
     </ng-template>
 </p-toolbar>
 
-<p-table [value]="listaPersone" 
+<p-table [value]="listaPersone"
         [rowsPerPageOptions]="[10,20,30]"
         [paginator]="true"
         [rows]="size"
@@ -31,7 +31,7 @@
             <th>Nome
                 <p>
                     <input type="text" pInputText [(ngModel)]="personeParams.nomeInput" placeholder="Cerca" (keyup.enter)="filtra()" pSize="small" style="width: 100%;"/>
-                </p>   
+                </p>
             </th>
             <th>Cognome
                 <p>
@@ -41,22 +41,22 @@
             <th>Età
                 <p>
                     <input type="number" pInputText [(ngModel)]="personeParams.etaInput" placeholder="Cerca" (keyup.enter)="filtra()" pSize="small" style="width: 100%;"/>
-                </p>  
+                </p>
             </th>
             <th>Luogo di nascita
                 <p>
                     <input type="text" pInputText [(ngModel)]="personeParams.luogo_di_nascitaInput" placeholder="Cerca" (keyup.enter)="filtra()" pSize="small" style="width: 100%;"/>
-                </p>  
+                </p>
             </th>
             <th>Città attuale
                 <p>
                     <input type="text" pInputText [(ngModel)]="personeParams.cittaInput" placeholder="Cerca" (keyup.enter)="filtra()" pSize="small" style="width: 100%;"/>
-                </p>  
+                </p>
             </th>
             <th>Indirizzo
                 <p>
                     <input type="text" pInputText [(ngModel)]="personeParams.indirizzoInput" placeholder="Cerca" (keyup.enter)="filtra()" pSize="small" style="width: 100%;"/>
-                </p>  
+                </p>
             </th>
             <th style="text-align: center;">Opzioni</th>
         </tr>
@@ -72,7 +72,7 @@
             <td>{{ persona.indirizzo }}</td>
             <td>
                 <p-button icon="pi pi-ellipsis-v" [rounded]="true" severity="info" [outlined]="true" (click)="openMenuOption($event, persona, menu)" class="flex justify-center" />
-            </td>  
+            </td>
         </tr>
     </ng-template>
 </p-table>
@@ -90,14 +90,5 @@
     </div>
 </p-dialog>
 
-<p-dialog header="Opzioni" [modal]="true" [(visible)]="visibleOption" [style]="{ width: '25rem' }">
-    <span class="p-text-primary block mb-8">Scegliere cosa fare con la persona selezionata:</span>
-    <div class="flex items-center gap-4 mb-4" style="padding: 30px;">
-        <p-button class="bottone" (click)="goToEditPersona(personaSelezionata)" label="Modifica" variant="outlined" />
-        <p-button class="bottone" (click)="showDialogDelete(personaSelezionata)" label="Elimina" variant="outlined" />
-    </div>
-    <div class="flex justify-end gap-2">
-        <p-button label="Cancel" severity="primary" (click)="visibleOption = false" />
-    </div>
-</p-dialog>
+
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import { LoginService } from '../../services/login-service';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
@@ -6,6 +6,7 @@ import { IftaLabelModule } from 'primeng/iftalabel';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +14,15 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
+
   constructor(private loginService: LoginService, private router: Router){}
 
   username: string = "";
   password: string = "";
   credenzialiGiuste  = false;
+
+  sub = new Subscription();
 
   login(): void {
     this.loginService.credenzialiGiuste(this.username, this.password).subscribe(response =>{
@@ -27,7 +31,11 @@ export class LoginComponent {
       }else{
         alert("Credenziali errate")
       }
-        
+
     })
+  }
+
+  ngOnDestroy(){
+    this.sub.unsubscribe();
   }
 }

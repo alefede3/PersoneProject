@@ -46,7 +46,6 @@ public class ModificaController {
 
     @DeleteMapping("person/delete")
     public void deletePersona(Long id){
-        System.out.println("id nel controller " + id);
         personeService.deletePersona(id);
     }
 }

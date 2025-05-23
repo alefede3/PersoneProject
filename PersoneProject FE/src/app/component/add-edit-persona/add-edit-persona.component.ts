@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Persona } from '../../models/persona';
 import { CardModule } from 'primeng/card';
 import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,7 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { TabsModule } from 'primeng/tabs';
-import { TabsComponent } from "../tabs/tabs.component";
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-add-edit-persona',
@@ -17,13 +17,15 @@ import { TabsComponent } from "../tabs/tabs.component";
   templateUrl: './add-edit-persona.component.html',
   styleUrl: './add-edit-persona.component.scss'
 })
-export class AddEditPersonaComponent {
+export class AddEditPersonaComponent implements OnInit, OnDestroy{
+
 
   constructor(private listaPersoneService: ListaPersoneService, private router: Router, private route: ActivatedRoute){}
 
   id: string | null = null;
 
- 
+  sub = new Subscription();
+
   form = new FormGroup({
     id: new FormControl<number | null>(null),
     nome: new FormControl<string |null>('', Validators.required),
@@ -51,16 +53,20 @@ export class AddEditPersonaComponent {
 
     if (this.id) {
       this.listaPersoneService.updatePersona(this.form.getRawValue() as Persona, parseInt(this.id)).subscribe(() => {
-        this.router.navigate(['create'])
+        this.router.navigate(['list'])
       })
-      
+
     }else{
       this.listaPersoneService.addPersona(this.form.getRawValue()).subscribe(() => {})
       this.router.navigate(['edit/:id']);
-    }  
+    }
   }
 
-  goToList(){
+  goToUserList(){
     this.router.navigate(['list'])
-  }  
+  }
+
+  ngOnDestroy(){
+    this.sub.unsubscribe();
+  }
 }

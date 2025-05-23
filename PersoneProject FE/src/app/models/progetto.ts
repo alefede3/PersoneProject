@@ -4,7 +4,7 @@ export interface Progetto{
     descrizione_progetto: string;
     data_inizio: string;
     data_fine: string;
-    budegt: number;
+    budget: number;
 }
 
 export interface ProgettoResponse{

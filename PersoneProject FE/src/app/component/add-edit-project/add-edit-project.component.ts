@@ -8,6 +8,7 @@ import {IftaLabel} from 'primeng/iftalabel';
 import {InputText} from 'primeng/inputtext';
 import {Progetto} from '../../models/progetto';
 import {Subscription} from 'rxjs';
+import {Textarea} from 'primeng/textarea';
 
 @Component({
   selector: 'app-add-edit-project',
@@ -16,7 +17,8 @@ import {Subscription} from 'rxjs';
     Card,
     IftaLabel,
     InputText,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Textarea
   ],
   templateUrl: './add-edit-project.component.html',
   styleUrl: './add-edit-project.component.scss'
@@ -43,9 +45,9 @@ export class AddEditProjectComponent implements OnInit, OnDestroy {
     this.id = this.route.snapshot.paramMap?.get('id') || null;
 
     if (this.id) {
-      this.sub.add(this.progettiService.getProject(parseInt(this.id)).subscribe(response => {
+      this.progettiService.getProject(parseInt(this.id)).subscribe(response => {
         this.form.patchValue(response)
-      }))
+      })
 
     }
   }

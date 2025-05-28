@@ -21,6 +21,8 @@ export class ProgettiListService {
     }
     });
 
+    console.log("progetti: ", progettiPaginatiParams)
+
     return this.http.get<ProgettoResponse>(this.ProgettiAPIUrl + '/projects/list', {params: progettiPaginatiParams})
   }
 

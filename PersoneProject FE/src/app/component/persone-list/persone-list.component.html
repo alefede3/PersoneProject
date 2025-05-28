@@ -9,18 +9,17 @@
 </p-toolbar>
 
 <p-table [value]="listaPersone"
+         [lazy]="true"
         [rowsPerPageOptions]="[10,20,30]"
         [paginator]="true"
-        [rows]="size"
+        [rows]="10"
         [totalRecords]="totalRecords"
-        [first]="first"
+        [tableStyle]="{ 'min-width': '35rem','min-height': '20rem', 'padding': '12px' }"
         [showCurrentPageReport]="true"
-        [tableStyle]="{ 'min-width': '35rem','min-height': '20rem'}"
-        [tableStyle]="{ 'padding': '12px'}"
         currentPageReportTemplate="{first} - {last} of {{totalRecords}}"
-        (onPage)="onPageChange($event)"
         [scrollable]="true"
-        scrollHeight="450px">
+        scrollHeight="450px"
+        (onLazyLoad)="onPageChange($event)">
     <ng-template #header>
         <tr>
             <th>Id
@@ -77,7 +76,7 @@
     </ng-template>
 </p-table>
 
-<p-tieredmenu #menu [model]="items" [popup]="true" />
+<p-tieredmenu #menu [model]="items" [popup]="true"></p-tieredmenu>
 
 <p-dialog header="Eliminare Persona?" [modal]="true" [(visible)]="visibleDelete" [style]="{ width: '25rem' }">
     <span class="p-text-secondary block mb-8">Sei sicuro di voler eliminare la seguente persona?</span>

@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Persona, PersonaQueryParams } from '../../models/persona';
-import { TableModule } from 'primeng/table';
+import {TableLazyLoadEvent, TableModule} from 'primeng/table';
 import { ListaPersoneService } from '../../services/persone-list-service';
 import { CommonModule } from '@angular/common';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { PaginatorModule } from 'primeng/paginator';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
@@ -31,9 +31,6 @@ export class PersoneListComponent implements OnInit, OnDestroy{
 
   items: MenuItem[] | undefined;
 
-  first: number = 0;
-  size: number = 10
-  page: number = 0;
   totalRecords!: number;
 
   personeParams: PersonaQueryParams = this.inizializzaPersoneParams();
@@ -83,10 +80,12 @@ export class PersoneListComponent implements OnInit, OnDestroy{
     });
   }
 
-  onPageChange(event: PaginatorState) {
+  onPageChange(event: TableLazyLoadEvent){
+    const first = event.first ?? 0;
+    const rows = event.rows ?? 10;
 
-    this.first = event.first!;
-    this.personeParams.size = event.rows!;
+    this.personeParams.page = first / rows;
+    this.personeParams.size = rows;
 
     this.listaPersoneService.getPersonePaginate(this.personeParams).subscribe(response => {
       this.listaPersone = response.content;

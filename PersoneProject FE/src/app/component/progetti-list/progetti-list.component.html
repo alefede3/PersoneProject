@@ -10,12 +10,17 @@
 
 <p-table
     [value]="listaProgetti"
+    [lazy]="true"
     [paginator]="true"
     [rows]="5"
-    [tableStyle]="{ 'min-width': '50rem' }"
+    [totalRecords]="totalRecords"
+    [tableStyle]="{ 'min-width': '35rem','min-height': '20rem', 'padding': '12px' }"
     [rowsPerPageOptions]="[5, 10, 20]"
     [scrollable]="true"
     scrollHeight="450px"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="{first} - {last} of {{totalRecords}}"
+    (onLazyLoad)="onPageChange($event)"
 >
     <ng-template #header>
         <tr>
@@ -67,7 +72,7 @@
     </ng-template>
 </p-table>
 
-<p-tieredmenu #menu [model]="items" [popup]="true" />
+<p-tieredmenu #menu [model]="items" [popup]="true"></p-tieredmenu>
 
 <p-dialog header="Eliminare Progetto?" [modal]="true" [(visible)]="visibleDelete" [style]="{ width: '25rem' }">
   <span class="p-text-secondary block mb-8">Sei sicuro di voler eliminare il seguente progetto?</span>

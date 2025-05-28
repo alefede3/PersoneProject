@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ProgettiListService } from '../../services/progetti-list.service';
 import { Progetto, ProgettoQueryParams } from '../../models/progetto';
-import { TableModule } from 'primeng/table';
+import {TableLazyLoadEvent, TableModule} from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import {Button} from 'primeng/button';
@@ -68,8 +68,24 @@ export class ProgettiListComponent implements OnInit, OnDestroy{
     })
   }
 
+  onPageChange(event: TableLazyLoadEvent){
+    const first = event.first ?? 0;
+    const rows = event.rows ?? 10;
+
+    this.progettoParams.page = first / rows;
+    this.progettoParams.size = rows;
+
+    this.progettiService.getProgettiPaginati(this.progettoParams).subscribe(response => {
+      this.listaProgetti = response.content;
+      this.totalRecords = response.totalElements;
+    });
+  }
+
   filtraProgetto(){
-    this.progettiService.getProgettiPaginati(this.progettoParams).subscribe()
+    this.progettiService.getProgettiPaginati(this.progettoParams).subscribe(response => {
+      this.listaProgetti = response.content;
+      this.totalRecords = response.totalElements;
+    })
   }
 
   openMenuOption(event: MouseEvent, progetto: Progetto, menu: any): void {

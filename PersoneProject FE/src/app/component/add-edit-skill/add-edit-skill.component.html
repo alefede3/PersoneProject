@@ -1,0 +1,42 @@
+<div class="flex content-start mt-3 w-full justify-between">
+  <div class="flex flex-col gap-3 justify-start ml-3">
+    <p-button icon="pi pi-home" [rounded]="true" [text]="true" (onClick)="goToSkillsList()"/>
+  </div>
+  <div class="flex mr-3">
+    <p-button icon="pi pi-check" [outlined]="true" [disabled]="form.invalid" aria-label="Save" label="Salva" (onClick)="submit()"/>
+  </div>
+</div>
+
+<div class="flex w-full mt-6 ">
+  <form [formGroup]="form" class="w-full flex justify-center">
+    <p-card class="card flex justify-center">
+      <p class="pi pi-star text-2xl" > <b> {{form.value.nome_skill}} </b></p>
+      <div class="flex flex-row gap-3 mt-3 items-center">
+          <div style="margin-right: 10px;">
+            <p-ifta-label>
+              <input pInputText formControlName="nome_skill" />
+              @if (form.get('nome_skill')?.invalid && form.get('nome_skill')?.touched){
+                <div>
+                  <p>Il nome della skill è obbligatoria.</p>
+                </div>
+              }
+              <label>Nome</label>
+            </p-ifta-label>
+          </div>
+          <div style="margin-right: 10px;">
+            <p-ifta-label>
+              <textarea formControlName="descrizione_skill" rows="2" cols="30" pTextarea [autoResize]="true"></textarea>
+              @if (form.get('descrizione_skill')?.invalid && form.get('descrizione_skill')?.touched){
+                <div>
+                  <p>La descrizione della skill è obbligatoria.</p>
+                </div>
+              }
+              <label>Descrizione Skill</label>
+            </p-ifta-label>
+          </div>
+      </div>
+    </p-card>
+  </form>
+</div>
+
+

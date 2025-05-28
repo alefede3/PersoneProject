@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabsProjectComponent } from './tabs-project.component';
+import { AddEditSkillComponent } from './add-edit-skill.component';
 
-describe('tabsProjectComponent', () => {
-  let component: TabsProjectComponent;
-  let fixture: ComponentFixture<TabsProjectComponent>;
+describe('AddEditSkillComponent', () => {
+  let component: AddEditSkillComponent;
+  let fixture: ComponentFixture<AddEditSkillComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TabsProjectComponent]
+      imports: [AddEditSkillComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TabsProjectComponent);
+    fixture = TestBed.createComponent(AddEditSkillComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

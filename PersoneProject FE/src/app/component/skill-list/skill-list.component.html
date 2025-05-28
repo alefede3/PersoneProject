@@ -1,0 +1,80 @@
+<p-toolbar styleClass="m-4 h-14 flex content-center">
+  <ng-template #start>
+    <p-button label="New" icon="pi pi-plus" [text]="true" (onClick)="goToAddSkill()" severity="secondary"/>
+  </ng-template>
+
+  <ng-template #end>
+    <p>Skill totali: {{ totElements }}</p>
+  </ng-template>
+</p-toolbar>
+
+<p-table
+  [value]="listaSkills"
+  [lazy]="true"
+  [paginator]="true"
+  [rows]="10"
+  [totalRecords]="totElements"
+  [tableStyle]="{ 'min-width': '35rem','min-height': '20rem', 'padding': '12px' }"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  [scrollable]="true"
+  scrollHeight="450px"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="{first} - {last} of {{totElements}}"
+  (onLazyLoad)="onPageChange($event)"
+>
+  <ng-template #header>
+    <tr>
+      <th>Id
+        <p>
+          <input type="number" pInputText [(ngModel)]="skillParam.id_skillInput" placeholder="Cerca" (keyup.enter)="filtraSkill()" pSize="small" style="width: 100%;"/>
+        </p>
+      </th>
+      <th>Nome
+        <p>
+          <input type="text" pInputText [(ngModel)]="skillParam.nome_skillInput" placeholder="Cerca" (keyup.enter)="filtraSkill()" pSize="small" style="width: 100%;"/>
+        </p>
+      </th>
+      <th>Descrizione
+        <p>
+          <input type="text" pInputText [(ngModel)]="skillParam.descrizione_skillInput" placeholder="Cerca" (keyup.enter)="filtraSkill()" pSize="small" style="width: 100%;"/>
+        </p>
+      </th>
+      <th style="text-align: center;">Opzioni</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-skill>
+    <tr>
+      <td>{{ skill.id_skill }}</td>
+      <td>{{ skill.nome_skill }}</td>
+      <td>{{ skill.descrizione_skill }}</td>
+      <td>
+        <p-button icon="pi pi-ellipsis-v" [rounded]="true" severity="info" [outlined]="true" (click)="openMenuOption($event, skill, menu)" class="flex justify-center" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+ <p-tieredmenu #menu [model]="items" [popup]="true"></p-tieredmenu>
+
+<p-dialog header="Eliminare skill?" [modal]="true" [(visible)]="visibleDelete" [style]="{ width: '25rem' }">
+  <span class="p-text-secondary block mb-8">sei sicuro di voler eliminare la seguente skill?</span>
+  @if (selectedSkill){
+    <div style="margin-top: 15px;">
+      <div><b> {{ selectedSkill.nome_skill }} </b> </div>
+    </div>
+  }
+  <div class="flex justify-end gap-2" style="margin-top: 30px;">
+    <p-button class="bottone" label="indietro" severity="secondary" (click)="visibleDelete = false" />
+    <p-button class="bottone" label="elimina" (click)="deleteSkill(selectedSkill)" />
+  </div>
+</p-dialog>
+
+<p-dialog header="opzioni" [modal]="true" [(visible)]="visibleOption" [style]="{ width: '25rem' }">
+  <div class="flex items-center gap-4 mb-4" style="padding: 30px;">
+    <p-button class="bottone" (click)="goToEditSkill(selectedSkill)" label="modifica" variant="outlined" />
+    <p-button class="bottone" (click)="showDialogDelete(selectedSkill)" label="elimina" variant="outlined" />
+  </div>
+  <div class="flex justify-end gap-2">
+    <p-button label="cancel" severity="primary" (click)="visibleOption = false" />
+  </div>
+</p-dialog>

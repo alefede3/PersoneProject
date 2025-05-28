@@ -16,7 +16,7 @@
                         <div style="margin-right: 10px;">
                             <p-ifta-label>
                                 <input pInputText formControlName="nome" />
-                                    <div *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched" class=" w-full">
+                                    <div *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched">
                                         <p *ngIf="form.get('nome')?.hasError('required')">Il nome è obbligatorio.</p>
                                     </div>
                                 <label for="nome">Nome</label>

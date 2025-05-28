@@ -23,10 +23,10 @@
             }
             <label>Nome</label>
           </p-ifta-label>
-            </div>
+          </div>
           <div style="margin-right: 10px;">
             <p-ifta-label>
-              <input pInputText formControlName="descrizione_progetto" />
+              <textarea formControlName="descrizione_progetto" rows="2" cols="30" pTextarea [autoResize]="true"></textarea>
               @if (form.get('descrizione_progetto')?.invalid && form.get('descrizione_progettto')?.touched){
                   <div>
                     <p>La descrizione del progetto è obbligatoria.</p>

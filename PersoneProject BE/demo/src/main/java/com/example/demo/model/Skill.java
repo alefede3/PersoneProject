@@ -22,6 +22,8 @@ public class Skill {
         this.descrizione_skill = descrizione_skill;
     }
 
+    public Skill(){ }
+
     public Long getId_skill() {
         return id_skill;
     }

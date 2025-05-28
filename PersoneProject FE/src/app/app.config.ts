@@ -6,11 +6,30 @@ import Lara from '@primeng/themes/lara';
 
 
 import { routes } from './app.routes';
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors} from '@angular/common/http';
+import {provideAuth, LogLevel, authInterceptor} from 'angular-auth-oidc-client';
 
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(), provideAnimationsAsync(),
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideHttpClient(withInterceptors([authInterceptor()])),
+    provideAnimationsAsync(),
+    provideAuth({
+      config: {
+        authority: 'http://localhost:9090/realms/customer',
+        redirectUrl: window.location.origin,
+        postLogoutRedirectUri: window.location.origin,
+        clientId: 'frontend',
+        scope: 'email profile openid roles',
+        responseType: 'code',
+        silentRenew: true,
+        useRefreshToken: true,
+        logLevel: LogLevel.Debug,
+        secureRoutes: ['http://localhost:8080'],
+      },
+    }),
     providePrimeNG({
         theme: {
             preset: Lara,

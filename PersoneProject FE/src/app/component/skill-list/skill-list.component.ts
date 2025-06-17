@@ -32,6 +32,7 @@ export class SkillListComponent implements OnInit, OnDestroy{
   constructor(private skillService: SkillListService, private router: Router) {}
 
   listaSkills: Skill[] = [];
+
   totElements!: number;
 
   skillParam: SkillQueryParams = {
@@ -71,6 +72,7 @@ export class SkillListComponent implements OnInit, OnDestroy{
       this.listaSkills = response.content;
       this.totElements = response.totalElements;
     })
+
   }
 
   onPageChange(event: TableLazyLoadEvent){

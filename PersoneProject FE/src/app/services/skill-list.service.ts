@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Skill, SkillQueryParams, SkillResponse} from '../models/skill';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Injectable({
@@ -12,6 +12,7 @@ export class SkillListService {
 
   constructor(private http: HttpClient) { }
 
+  private skillsSubject = new BehaviorSubject<Skill[]>([]);
 
   getSkillPaginate(skillObject: SkillQueryParams): Observable<SkillResponse> {
     let skillPaginateParams = new HttpParams();
@@ -40,6 +41,10 @@ export class SkillListService {
 
   updateSkill(skill: Skill, id: number): Observable<void>{
     return this.http.put<void>(this.skillAPIUrl + `/skill/update/${id}`, skill)
+  }
+
+  getAllSkills(): Observable<Skill[]>{
+    return this.http.get<Skill[]>(this.skillAPIUrl + '/skills/all');
   }
 }
 

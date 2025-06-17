@@ -24,5 +24,4 @@ public interface PersoneRepository extends JpaRepository<Persone, Long> {
     Page<Persone> trovaPersonePaginateEFiltrate(@Param("nome") String nome, @Param("cognome") String cognome, 
                     @Param("id") Long id, @Param("eta") Integer eta, @Param("luogo_di_nascita") String luogo_di_nascita, 
                     @Param("citta") String citta, @Param("indirizzo") String indirizzo, Pageable pageable);
-
 }

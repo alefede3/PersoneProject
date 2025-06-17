@@ -29,4 +29,6 @@ export class TabsSkillComponent implements OnInit {
       this.checkId = true;
     }
   }
+
+
 }

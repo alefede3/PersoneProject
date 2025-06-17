@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Persona, PersonaQueryParams, PersonaResponse } from '../models/persona';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import {Skill} from '../models/skill';
+import {Projects} from '@angular/cli/lib/config/workspace-schema';
+import {Progetto} from '../models/progetto';
 
 @Injectable(
   {
@@ -37,16 +40,8 @@ export class ListaPersoneService {
     return this.http.get<Persona>(this.PersoneAPIUrl + `/person/${id}`)
   }
 
-  getNumberListaPersoneLength(): Observable<number>{
-    return this.http.get<number>(this.PersoneAPIUrl + '/list/size')
-  }
-   
-  savePersona(persona: Persona, id: number): Observable<void>{
-    return this.http.put<void>(this.PersoneAPIUrl + `/person/${id}`, persona)
-  }
-
   addPersona(aggiungiPersonaObject: Persona): Observable<void>{
-    return this.http.post<void>(this.PersoneAPIUrl + '/add', aggiungiPersonaObject 
+    return this.http.post<void>(this.PersoneAPIUrl + '/add', aggiungiPersonaObject
     )
   }
 
@@ -58,5 +53,23 @@ export class ListaPersoneService {
 
   numeroPersoneUpdated(numeroAggiornato: number){
     this.totalPersons = of(numeroAggiornato);
+  }
+
+  addSkillToPersona(idPersona: number, idSelectedSkills: number[]){
+    return this.http.post<void>(this.PersoneAPIUrl + `/user/${idPersona}/skills`, {idPersona, idSelectedSkills})
+  }
+
+  getSkillsByPersonaId(id: number):Observable<Skill[]>{
+    return this.http.get<Skill[]>(this.PersoneAPIUrl + `/user/${id}/skills`)
+  }
+
+  addProjectToPersona(idPersona: number, idSelectedProject: number | null):Observable<void>{
+    return this.http.post<void>(this.PersoneAPIUrl + `/user/${idPersona}/project`,
+      {idPersona, idSelectedProject}
+    )
+  }
+
+  getProjectByPersonaID(id: number):Observable<Progetto>{
+    return this.http.get<Progetto>(this.PersoneAPIUrl + `/user/${id}/project`)
   }
 }

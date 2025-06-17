@@ -1,10 +1,6 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Progetto")
@@ -18,7 +14,7 @@ public class Progetto {
     private String data_inizio;
     private String data_fine;
     private Integer budget;
-    
+
     public Progetto(){}
 
     public Progetto(Long id_progetto, String nome_progetto, String descrizione_progetto, String data_inizio,

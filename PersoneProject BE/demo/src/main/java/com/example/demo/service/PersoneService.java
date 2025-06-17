@@ -1,8 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Persone;
-import com.example.demo.repository.PersoneRepository;
+import com.example.demo.model.*;
+import com.example.demo.repository.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,13 +11,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
+@Transactional
 public class PersoneService {
 
     @Autowired
     private PersoneRepository personeRepository;
+
+    @Autowired
+    private SkillRepository skillRepository;
+
+    @Autowired
+    private PersonaSkillRepository personaSkillRepository;
+
+    @Autowired
+    private ProgettiRepository progettoRepository;
+
+    @Autowired
+    private PersonaProgettoRepository personaProgettoRepository;
 
     public void savePersona(Persone persona) {
         personeRepository.save(persona);
@@ -46,4 +61,53 @@ public class PersoneService {
     public void deletePersona(Long id){
         personeRepository.deleteById(id);
     }
+
+    public void addSkillToPersona(PersonaSkillDTO personaSkillDTO) {
+        Persone persona = personeRepository.findById(personaSkillDTO.getIdPersona())
+                .orElseThrow(() -> new RuntimeException("Persona non trovata con id: " + personaSkillDTO.getIdPersona()));
+
+        personaSkillRepository.deleteByPersona(persona);
+
+        List<Skill> skillsToAdd =  skillRepository.findAllById(personaSkillDTO.getIdSelectedSkills());
+
+        List<PersonaSkill> personaSkill = new ArrayList<>();
+
+        for (Skill skill : skillsToAdd) {
+            PersonaSkill tmp = new PersonaSkill();
+            tmp.setSkill(skill);
+            tmp.setPersona(persona);
+
+            personaSkill.add(tmp);
+        }
+
+        personaSkillRepository.saveAll(personaSkill);
+    }
+
+    public List<Skill> getSkillsByPersonaId(Long idPersona) {
+        return personaSkillRepository.findSkillsByPersonaId(idPersona);
+    }
+
+    public void addProjectToPersona(PersonaProgettoDTO personaProgettoDTO){
+        Persone persona = personeRepository.findById(personaProgettoDTO.getIdPersona())
+                .orElseThrow(() -> new RuntimeException("Persona non trovata con id: " + personaProgettoDTO.getIdPersona()));
+
+        personaProgettoRepository.deleteByPersona(persona);
+
+        if (personaProgettoDTO.getIdSelectedProject() != null){
+            Progetto progetto = progettoRepository.findById(personaProgettoDTO.getIdSelectedProject())
+                    .orElseThrow(() -> new RuntimeException("Progetto non trovato con id: " + personaProgettoDTO.getIdSelectedProject()));
+
+            PersonaProgetto personaProgetto = new PersonaProgetto();
+
+            personaProgetto.setPersona(persona);
+            personaProgetto.setProject(progetto);
+
+            personaProgettoRepository.save(personaProgetto);
+        }
+    }
+
+    public Progetto getProjectByPersonaId(Long idPersona){
+        return personaProgettoRepository.findProjectByPersonaId(idPersona);
+    }
+
 }

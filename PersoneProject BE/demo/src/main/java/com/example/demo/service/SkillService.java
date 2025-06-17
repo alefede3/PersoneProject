@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SkillService {
 
@@ -34,4 +36,6 @@ public class SkillService {
     public void saveSkill(Skill skill) {
         skillRepository.save(skill);
     }
+
+    public List<Skill> getAllSkills() {return skillRepository.findAll();}
 }

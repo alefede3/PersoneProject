@@ -1,10 +1,9 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Skill")
@@ -12,11 +11,12 @@ public class Skill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id_skill;
     private String nome_skill;
     private String descrizione_skill;
-    
-    public Skill(Long id_skill, String nome_skill, String descrizione_skill) {
+
+    public Skill(Long id_skill, String nome_skill, String descrizione_skill, List<Persone> persone) {
         this.id_skill = id_skill;
         this.nome_skill = nome_skill;
         this.descrizione_skill = descrizione_skill;
@@ -48,5 +48,4 @@ public class Skill {
         this.descrizione_skill = descrizione_skill;
     }
 
-    
 }

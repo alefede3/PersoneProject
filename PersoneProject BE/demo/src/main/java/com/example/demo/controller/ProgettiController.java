@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.model.Progetto;
 import com.example.demo.service.ProgettiService;
 
+import java.util.List;
+
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -44,6 +46,7 @@ public class ProgettiController{
         Progetto progettoUpdated = progettiService.getProgetto(id);
 
         progettoUpdated.setNome_progetto(progetto.getNome_progetto());
+        progettoUpdated.setDescrizione_progetto(progetto.getDescrizione_progetto());
         progettoUpdated.setData_inizio(progetto.getData_inizio());
         progettoUpdated.setData_fine(progetto.getData_fine());
         progettoUpdated.setBudget(progetto.getBudget());
@@ -53,4 +56,7 @@ public class ProgettiController{
 
     @GetMapping("/project/{id}")
     public Progetto getProgetto(@PathVariable Long id){ return progettiService.getProgetto(id); }
+
+    @GetMapping("/projects/all")
+    public List<Progetto> getAllProjects(){ return progettiService.getAllProjects(); }
 }

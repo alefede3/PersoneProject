@@ -43,4 +43,8 @@ export class ProgettiListService {
   updateProject(progetto: Progetto, id_progetto: number): Observable<void>{
     return this.http.put<void>(this.ProgettiAPIUrl + `/project/update/${id_progetto}`, progetto)
   }
+
+  getAllProjects(): Observable<Progetto[]>{
+    return this.http.get<Progetto[]>(this.ProgettiAPIUrl + '/projects/all');
+  }
 }

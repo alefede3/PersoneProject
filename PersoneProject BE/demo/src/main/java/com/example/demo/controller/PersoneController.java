@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Persone;
+import com.example.demo.model.*;
 import com.example.demo.service.PersoneService;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class PersoneController {
 
     @GetMapping("/list/size")
     public int listPersone(Model model) {
-        List<Persone> persone = personeService.getAllPersone();;
+        List<Persone> persone = personeService.getAllPersone();
 
         return persone.size();
     }
@@ -45,4 +45,26 @@ public class PersoneController {
 
         personeService.savePersona(nuovaPersona);
     }
+
+    @PostMapping("/user/{id}/skills")
+    public void addSkillToPersona(@RequestBody PersonaSkillDTO personaSkillDTO, @PathVariable Long id) {
+        personeService.addSkillToPersona(personaSkillDTO);
+    }
+
+    @GetMapping("/user/{id}/skills")
+    public List<Skill> getSkillsByPersonaId(@PathVariable Long id) {
+        return personeService.getSkillsByPersonaId(id);
+    }
+
+    @PostMapping("/user/{id}/project")
+    public void addProjectToPersona(@RequestBody PersonaProgettoDTO personaProgettoDTO, @PathVariable Long id) {
+        System.out.print("id progetto nel controller " + personaProgettoDTO.getIdSelectedProject());
+        personeService.addProjectToPersona(personaProgettoDTO);
+    }
+
+    @GetMapping("/user/{id}/project")
+    public Progetto getProjectByPersonaId(@PathVariable Long id) {
+        return personeService.getProjectByPersonaId(id);
+    }
 }
+

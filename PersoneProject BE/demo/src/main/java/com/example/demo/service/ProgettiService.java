@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.example.demo.model.Progetto;
 import com.example.demo.repository.ProgettiRepository;
 
+import java.util.List;
+
 @Service
 public class ProgettiService {
 
@@ -31,4 +33,8 @@ public class ProgettiService {
     public void saveProject(Progetto progetto){ progettiRepository.save(progetto); }
 
     public Progetto getProgetto(Long id_progetto){ return progettiRepository.findById(id_progetto).get(); }
+
+    public List<Progetto> getAllProjects(){
+        return progettiRepository.findAll();
+    }
 }

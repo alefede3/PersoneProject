@@ -37,10 +37,6 @@ public class PersoneService {
         personeRepository.save(persona);
     }
 
-    public List<Persone> getAllPersone(){
-        return personeRepository.findAll();
-    }
-
     public Persone getPersona(Long id) throws Exception{
         Optional<Persone> persona = personeRepository.findById(id);
         if (persona.isPresent()) {
@@ -109,5 +105,18 @@ public class PersoneService {
     public Progetto getProjectByPersonaId(Long idPersona){
         return personaProgettoRepository.findProjectByPersonaId(idPersona);
     }
+
+    public List<Persone> getAllUsers(){
+        return personeRepository.findAll();
+    }
+
+    public List<Persone> searchUsers(String nome){
+        return personeRepository.findByNome(nome);
+    }
+
+    public boolean checkUserAvailability(Long idPersona){
+        return !personaProgettoRepository.existsByPersonaId(idPersona);
+    }
+
 
 }

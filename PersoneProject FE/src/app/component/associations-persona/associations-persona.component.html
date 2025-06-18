@@ -8,18 +8,18 @@
 </div>
 
 <div class="flex w-full mt-6 justify-center">
-  <p-card class="card flex flex-col justify-center ">
+  <p-card class="card flex flex-col justify-center w-[400px] h-[350px]">
     <div class="m-3">
       <p class="pi pi-star text-2xl" > <b> Skill</b></p>
     </div>
     <div>
-      <p-multiSelect [options]="listaSkills" [(ngModel)]="selectedSkills" placeholder="Seleziona skill" optionLabel="nome_skill" display="chip" styleClass="w-full md:w-80"></p-multiSelect>
+      <p-multiSelect [options]="listaSkills" [(ngModel)]="selectedSkills" placeholder="Seleziona skill" optionLabel="nome_skill" display="chip" class="w-full"></p-multiSelect>
     </div>
     <div class="m-3">
       <p class="pi pi-pencil text-2xl" > <b> Progetto</b></p>
     </div>
     <div>
-      <p-select [options]="projectsList" [(ngModel)]="selectedProject" [checkmark]="true" [filter]="true" optionLabel="nome_progetto" [showClear]="true" placeholder="Seleziona progetto" class="w-full md:w-56" />
+      <p-select [options]="projectsList" [(ngModel)]="selectedProject" [checkmark]="true" [filter]="true" optionLabel="nome_progetto" [showClear]="true" placeholder="Seleziona progetto" class="w-full" />
     </div>
   </p-card>
 </div>

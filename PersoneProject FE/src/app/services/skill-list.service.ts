@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Skill, SkillQueryParams, SkillResponse} from '../models/skill';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {HttpClient, HttpParams} from '@angular/common/http';
+import {Persona} from '../models/persona';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,16 @@ export class SkillListService {
 
   getAllSkills(): Observable<Skill[]>{
     return this.http.get<Skill[]>(this.skillAPIUrl + '/skills/all');
+  }
+
+  getUsersBySkillId(skillId: number): Observable<Persona[]>{
+    return this.http.get<Persona[]>(this.skillAPIUrl + `/skill/${skillId}/users`)
+  }
+
+  removeUsersFromSkill(personaId: number[], skillId: number): Observable<void>{
+    return this.http.delete<void>(this.skillAPIUrl + `/skill/${skillId}/users`, {
+      params: {personaId}
+    })
   }
 }
 

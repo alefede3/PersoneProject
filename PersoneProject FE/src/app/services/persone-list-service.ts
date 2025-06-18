@@ -72,4 +72,12 @@ export class ListaPersoneService {
   getProjectByPersonaID(id: number):Observable<Progetto>{
     return this.http.get<Progetto>(this.PersoneAPIUrl + `/user/${id}/project`)
   }
+
+  searchUser(nome: string): Observable<Persona[]> {
+    return this.http.get<Persona[]>(this.PersoneAPIUrl + `/user/search/${nome}`)
+  }
+
+  checkUserAvailability(id: number):Observable<boolean>{
+    return this.http.get<boolean>(this.PersoneAPIUrl + `/user/${id}/availability`)
+  }
 }

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Tab, TabList, TabPanel, TabPanels, Tabs} from 'primeng/tabs';
 import {ActivatedRoute} from '@angular/router';
 import {AddEditProjectComponent} from '../add-edit-project/add-edit-project.component';
+import {AssociationsProgettoComponent} from '../associations-progetto/associations-progetto.component';
 
 @Component({
   selector: 'app-tabs-project',
@@ -11,7 +12,8 @@ import {AddEditProjectComponent} from '../add-edit-project/add-edit-project.comp
     TabPanel,
     TabPanels,
     Tabs,
-    AddEditProjectComponent
+    AddEditProjectComponent,
+    AssociationsProgettoComponent
   ],
   templateUrl: './tabs-project.component.html',
   styleUrl: './tabs-project.component.scss'

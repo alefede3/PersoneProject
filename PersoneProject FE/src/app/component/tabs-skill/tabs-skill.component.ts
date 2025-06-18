@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Tab, TabList, TabPanel, TabPanels, Tabs} from "primeng/tabs";
 import {ActivatedRoute} from '@angular/router';
 import {AddEditSkillComponent} from '../add-edit-skill/add-edit-skill.component';
+import {AssociationsSkillComponent} from '../associations-skill/associations-skill.component';
 
 @Component({
   selector: 'app-tabs-skill',
@@ -11,7 +12,8 @@ import {AddEditSkillComponent} from '../add-edit-skill/add-edit-skill.component'
     TabPanel,
     TabPanels,
     Tabs,
-    AddEditSkillComponent
+    AddEditSkillComponent,
+    AssociationsSkillComponent
   ],
   templateUrl: './tabs-skill.component.html',
   styleUrl: './tabs-skill.component.scss'

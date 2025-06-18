@@ -9,12 +9,12 @@
 
 <div class="flex w-full mt-6 ">
   <form [formGroup]="form" class="w-full flex justify-center">
-    <p-card class="card flex justify-center">
+    <p-card class="card w-[350px] h-[300px]">
       <p class="pi pi-star text-2xl" > <b> {{form.value.nome_skill}} </b></p>
-      <div class="flex flex-row gap-3 mt-3 items-center">
-          <div style="margin-right: 10px;">
+      <div class="flex flex-col gap-3 mt-3">
+          <div>
             <p-ifta-label>
-              <input pInputText formControlName="nome_skill" />
+              <input pInputText formControlName="nome_skill" class="w-full"/>
               @if (form.get('nome_skill')?.invalid && form.get('nome_skill')?.touched){
                 <div>
                   <p>Il nome della skill è obbligatoria.</p>
@@ -23,9 +23,9 @@
               <label>Nome</label>
             </p-ifta-label>
           </div>
-          <div style="margin-right: 10px;">
+          <div>
             <p-ifta-label>
-              <textarea formControlName="descrizione_skill" rows="2" cols="30" pTextarea [autoResize]="true"></textarea>
+              <textarea formControlName="descrizione_skill" rows="2" pTextarea [autoResize]="true" class="w-full"></textarea>
               @if (form.get('descrizione_skill')?.invalid && form.get('descrizione_skill')?.touched){
                 <div>
                   <p>La descrizione della skill è obbligatoria.</p>

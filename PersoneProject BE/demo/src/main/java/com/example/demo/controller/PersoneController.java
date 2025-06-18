@@ -5,6 +5,7 @@ import com.example.demo.service.PersoneService;
 
 import java.util.List;
 
+import org.hibernate.dialect.function.AggregateWindowEmulationQueryTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,13 +19,6 @@ public class PersoneController {
 
     @Autowired
     private PersoneService personeService;
-
-    @GetMapping("/list/size")
-    public int listPersone(Model model) {
-        List<Persone> persone = personeService.getAllPersone();
-
-        return persone.size();
-    }
 
     @GetMapping("/list")
     public Page<Persone> personePaginateEFiltrate(@RequestParam(required = false, defaultValue = "0") Integer page,
@@ -65,6 +59,21 @@ public class PersoneController {
     @GetMapping("/user/{id}/project")
     public Progetto getProjectByPersonaId(@PathVariable Long id) {
         return personeService.getProjectByPersonaId(id);
+    }
+
+    @GetMapping("/user/all")
+    public List<Persone> getAllUsers(){
+        return personeService.getAllUsers();
+    }
+
+    @GetMapping("/user/search/{nome}")
+    public List<Persone> searchUsers(@PathVariable String nome){
+        return  personeService.searchUsers(nome);
+    }
+
+    @GetMapping("/user/{id}/availability")
+    public boolean checkUserAvailability(@PathVariable Long id){
+        return personeService.checkUserAvailability(id);
     }
 }
 

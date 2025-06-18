@@ -16,27 +16,33 @@
                         <div style="margin-right: 10px;">
                             <p-ifta-label>
                                 <input pInputText formControlName="nome" />
-                                    <div *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched">
-                                        <p *ngIf="form.get('nome')?.hasError('required')">Il nome è obbligatorio.</p>
-                                    </div>
+                                @if (form.get('nome')?.invalid && form.get('nome')?.touched){
+                                  <div>
+                                    <p>Il nome della persona è obbligatorio.</p>
+                                  </div>
+                                }
                                 <label for="nome">Nome</label>
                             </p-ifta-label>
                         </div>
                         <div style="margin-right: 10px;">
                             <p-ifta-label>
                                 <input pInputText formControlName="cognome" />
-                                    <div *ngIf="form.get('cognome')?.invalid && form.get('cognome')?.touched">
-                                        <p *ngIf="form.get('cognome')?.hasError('required')">Il cognome è obbligatorio.</p>
-                                    </div>
+                                @if (form.get('cognome')?.invalid && form.get('cognome')?.touched){
+                                  <div>
+                                    <p>Il cognome della persona è obbligatorio.</p>
+                                  </div>
+                                }
                                 <label for="cognome">Cognome</label>
                             </p-ifta-label>
                         </div>
                         <div>
                             <p-ifta-label>
                                 <input pInputText formControlName="eta" />
-                                    <div *ngIf="form.get('eta')?.invalid && form.get('eta')?.touched">
-                                        <p *ngIf="form.get('eta')?.hasError('required')">L'età è obbligatoria.</p>
-                                    </div>
+                                @if (form.get('eta')?.invalid && form.get('eta')?.touched){
+                                  <div>
+                                    <p>L'età della persona è obbligatoria.</p>
+                                  </div>
+                                }
                                 <label for="eta">Età</label>
                             </p-ifta-label>
                         </div>
@@ -45,27 +51,33 @@
                         <div style="margin-right: 10px;">
                             <p-ifta-label>
                                 <input pInputText formControlName="luogo_di_nascita" />
-                                    <div *ngIf="form.get('luogo_di_nascita')?.invalid && form.get('luogo_di_nascita')?.touched">
-                                        <p *ngIf="form.get('luogo_di_nascita')?.hasError('luogo_di_nascita')">Il luogo di nascita è obbligatorio.</p>
-                                    </div>
+                                @if (form.get('luogo_di_nascita')?.invalid && form.get('luogo_di_nascita')?.touched){
+                                  <div>
+                                    <p>Il luogo di nascita della persona è obbligatorio.</p>
+                                  </div>
+                                }
                                 <label for="luogo_di_nascita">Luogo di nascita</label>
                             </p-ifta-label>
                         </div>
                         <div style="margin-right: 10px;">
                             <p-ifta-label>
                                 <input pInputText formControlName="citta" />
-                                    <div *ngIf="form.get('citta')?.invalid && form.get('citta')?.touched">
-                                        <p *ngIf="form.get('citta')?.hasError('citta')">La città è obbligatoria.</p>
-                                    </div>
+                                @if (form.get('citta')?.invalid && form.get('citta')?.touched){
+                                  <div>
+                                    <p>La città della persona è obbligatoria.</p>
+                                  </div>
+                                }
                                 <label for="citta">Città attuale</label>
                             </p-ifta-label>
                         </div>
                         <div>
                             <p-ifta-label>
                                 <input pInputText formControlName="indirizzo" />
-                                    <div *ngIf="form.get('indirizzo')?.invalid && form.get('indirizzo')?.touched">
-                                        <p *ngIf="form.get('indirizzo')?.hasError('indirizzo')">L'indirizzo è obbligatorio'.</p>
-                                    </div>
+                                @if (form.get('indirizzo')?.invalid && form.get('indirizzo')?.touched){
+                                  <div>
+                                    <p>L'indirizzo della persona è obbligatorio.</p>
+                                  </div>
+                                }
                                 <label for="indirizzo">Indirizzo</label>
                             </p-ifta-label>
                         </div>

@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Persone;
+import com.example.demo.repository.PersoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.model.Progetto;
 import com.example.demo.service.ProgettiService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -18,6 +22,8 @@ public class ProgettiController{
     
     @Autowired 
     private ProgettiService progettiService;
+    @Autowired
+    private PersoneRepository personaRepository;
 
     @GetMapping("/projects/list")
     public Page<Progetto> getProgettiPaginatiEFiltrati(@RequestParam (required = false, defaultValue = "0") Integer page,
@@ -59,4 +65,28 @@ public class ProgettiController{
 
     @GetMapping("/projects/all")
     public List<Progetto> getAllProjects(){ return progettiService.getAllProjects(); }
+
+    @GetMapping("/project/{id}/users")
+    public List<Persone> getPersoneByProjectId(@PathVariable Long id){
+        List<Long> associatedUsersIDs = progettiService.getPersoneByProjectId(id);
+
+
+        List<Persone> associatedUsers = new ArrayList<Persone>() {} ;
+
+        for(Long userID : associatedUsersIDs){
+            Optional<Persone> tmp = personaRepository.findById(userID);
+            if (tmp.isPresent()){
+                associatedUsers.add(tmp.get());
+            }
+        }
+
+        return associatedUsers;
+    }
+
+    @DeleteMapping("/project/{id}/users")
+    public void removeUsersFromProject(@RequestParam List<Long> personaId, @PathVariable Long id){
+        System.out.println("id Persone da cui togliere la skill in progetticontroller " + personaId);
+
+        progettiService.removeUsersFromProject(personaId);
+    }
 }

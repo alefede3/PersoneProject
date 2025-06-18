@@ -7,8 +7,8 @@
   </div>
 </div>
 
-<div class="flex w-full mt-6 ">
-  <form [formGroup]="form" class="w-full flex justify-center">
+<div class="w-full flex justify-center mt-6">
+  <form [formGroup]="form" class="flex flex-wrap content-center">
     <p-card class="card flex justify-center">
       <p class="pi pi-hammer text-2xl" > <b> {{form.value.nome_progetto}} </b></p>
       <div class="flex flex-col gap-3">
@@ -24,50 +24,52 @@
             <label>Nome</label>
           </p-ifta-label>
           </div>
+          <div>
+            <p-ifta-label>
+              <input id="budget" pInputText formControlName="budget" />
+              @if (form.get('budget')?.invalid && form.get('budget')?.touched){
+                <div>
+                  <p>Il budget è obbligatorio.</p>
+                </div>
+              }
+              <label>Budget</label>
+            </p-ifta-label>
+          </div>
+        </div>
+        <div class="flex flex-row justify-center" >
           <div style="margin-right: 10px;">
             <p-ifta-label>
-              <textarea formControlName="descrizione_progetto" rows="2" cols="30" pTextarea [autoResize]="true"></textarea>
+              <input pInputText formControlName="data_inizio" />
+              @if (form.get('data_inizio')?.invalid && form.get('data_inizio')?.touched){
+                <div>
+                  <p>La data di inizio è obbligatoria.</p>
+                </div>
+              }
+              <label>Data di inizio</label>
+            </p-ifta-label>
+          </div>
+          <div>
+            <p-ifta-label>
+              <input pInputText formControlName="data_fine" />
+              @if (form.get('data_fine')?.invalid && form.get('data_fine')?.touched){
+                <div>
+                  <p>La data di fine è obbligatoria.</p>
+                </div>
+              }
+              <label>Data di fine</label>
+            </p-ifta-label>
+          </div>
+        </div>
+        <div class="flex flex-row justify-center">
+          <div>
+            <p-ifta-label>
+              <textarea formControlName="descrizione_progetto" rows="2" cols="54" pTextarea [autoResize]="true"></textarea>
               @if (form.get('descrizione_progetto')?.invalid && form.get('descrizione_progettto')?.touched){
                   <div>
                     <p>La descrizione del progetto è obbligatoria.</p>
                   </div>
               }
               <label>Descrizione Progetto</label>
-            </p-ifta-label>
-          </div>
-          <div>
-            <p-ifta-label>
-              <input pInputText formControlName="data_inizio" />
-              @if (form.get('data_inizio')?.invalid && form.get('data_inizio')?.touched){
-                  <div>
-                    <p>La data di inizio è obbligatoria.</p>
-                  </div>
-              }
-              <label>Data di inizio</label>
-            </p-ifta-label>
-          </div>
-        </div>
-        <div class="flex flex-row justify-center">
-        <div style="margin-right: 10px;">
-            <p-ifta-label>
-              <input pInputText formControlName="data_fine" />
-              @if (form.get('data_fine')?.invalid && form.get('data_fine')?.touched){
-                  <div>
-                    <p>La data di fine è obbligatoria.</p>
-                  </div>
-              }
-              <label>Data di fine</label>
-            </p-ifta-label>
-          </div>
-          <div>
-            <p-ifta-label>
-              <input id="budget" pInputText formControlName="budget" />
-              @if (form.get('budget')?.invalid && form.get('budget')?.touched){
-                  <div>
-                    <p>Il budget è obbligatorio.</p>
-                  </div>
-              }
-              <label>Budget</label>
             </p-ifta-label>
           </div>
         </div>

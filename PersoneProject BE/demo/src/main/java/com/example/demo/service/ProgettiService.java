@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Persone;
+import com.example.demo.repository.PersonaProgettoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,9 @@ public class ProgettiService {
 
     @Autowired
     private ProgettiRepository progettiRepository;
+
+    @Autowired
+    private PersonaProgettoRepository personaProgettoRepository;
 
     public Page<Progetto> getProgettiPaginatiEFiltrati(Long id_progettoInput, String nome_progettoInput, String descrizione_progettoInput,
                                     String data_inizioInput, String data_fineInput, Integer budgetInput, Pageable pageable){
@@ -36,5 +41,13 @@ public class ProgettiService {
 
     public List<Progetto> getAllProjects(){
         return progettiRepository.findAll();
+    }
+
+    public List<Long> getPersoneByProjectId(Long id_progetto){
+        return personaProgettoRepository.getPersoneByProjectId(id_progetto);
+    }
+
+    public void removeUsersFromProject (List<Long> personaId ){
+        personaProgettoRepository.removeUsersFromProject(personaId);
     }
 }

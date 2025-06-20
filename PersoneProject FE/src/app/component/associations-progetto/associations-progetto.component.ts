@@ -5,8 +5,7 @@ import {ProgettiListService} from '../../services/progetti-list.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Card} from 'primeng/card';
 import {Button} from 'primeng/button';
-import {Subscription} from 'rxjs';
-import {Message} from 'primeng/message';
+import {Subscription, switchMap} from 'rxjs';
 import {ListaPersoneService} from '../../services/persone-list-service';
 import {FormsModule} from '@angular/forms';
 import {AutoComplete} from 'primeng/autocomplete';
@@ -17,7 +16,6 @@ import {AutoComplete} from 'primeng/autocomplete';
     TableModule,
     Card,
     Button,
-    Message,
     FormsModule,
     AutoComplete
   ],
@@ -40,7 +38,7 @@ export class AssociationsProgettoComponent implements OnInit, OnDestroy {
 
   isAvailable: boolean = true;
 
-  id: string | null | undefined;
+  id: string | null = null;
   idUser: number | null = null;
 
   ngOnInit() {
@@ -66,7 +64,16 @@ export class AssociationsProgettoComponent implements OnInit, OnDestroy {
     user = this.wantedUser;
     this.idUser = user.id;
     if (this.idUser != null && this.id != null) {
-      this.personaService.addProjectToPersona(this.idUser, parseInt(this.id)).subscribe()
+
+      const idProject: number = parseInt(this.id)
+
+      const switched = this.personaService.addProjectToPersona(this.idUser, parseInt(this.id)).pipe(
+        switchMap(x => this.progettiService.getPersoneByProjectId(idProject))
+      )
+
+      switched.subscribe(response => {
+        this.associatedUsers = response;
+      })
     }
   }
 
@@ -88,10 +95,17 @@ export class AssociationsProgettoComponent implements OnInit, OnDestroy {
     }
 
     if (this.id != null) {
-      this.progettiService.removeUsersFromProject(this.selectedUsersId, parseInt(this.id)).subscribe();
-    }
 
-    this.goToProjectsList()
+      const idProject: number = parseInt(this.id)
+
+      const switched = this.progettiService.removeUsersFromProject(this.selectedUsersId, parseInt(this.id)).pipe(
+        switchMap(x => this.progettiService.getPersoneByProjectId(idProject))
+      )
+
+      switched.subscribe(response => {
+        this.associatedUsers = response;
+      })
+    }
   }
 
   goToProjectsList(){

@@ -117,6 +117,4 @@ public class PersoneService {
     public boolean checkUserAvailability(Long idPersona){
         return !personaProgettoRepository.existsByPersonaId(idPersona);
     }
-
-
 }

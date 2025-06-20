@@ -3,10 +3,12 @@ import {Button} from "primeng/button";
 import {Card} from "primeng/card";
 import {TableModule} from "primeng/table";
 import {ActivatedRoute, Router} from '@angular/router';
-import {Subscription} from 'rxjs';
+import {Subscription, switchMap} from 'rxjs';
 import {Persona} from '../../models/persona';
 import {SkillListService} from '../../services/skill-list.service';
-import {Message} from 'primeng/message';
+import {AutoComplete} from 'primeng/autocomplete';
+import {FormsModule} from '@angular/forms';
+import {ListaPersoneService} from '../../services/persone-list-service';
 
 @Component({
   selector: 'app-associations-skill',
@@ -14,14 +16,15 @@ import {Message} from 'primeng/message';
     Button,
     Card,
     TableModule,
-    Message
+    AutoComplete,
+    FormsModule
   ],
   templateUrl: './associations-skill.component.html',
   styleUrl: './associations-skill.component.scss'
 })
 export class AssociationsSkillComponent implements OnInit, OnDestroy {
 
-  constructor(private skillService: SkillListService, private route: ActivatedRoute, private router: Router) {
+  constructor(private skillService: SkillListService, private route: ActivatedRoute, private router: Router, private personaService: ListaPersoneService) {
   }
 
   sub = new Subscription();
@@ -30,7 +33,15 @@ export class AssociationsSkillComponent implements OnInit, OnDestroy {
   selectedUsers: Persona[] = [];
   selectedUsersId: number[] = [];
 
+  wantedUser!: Persona;
+  filteredUsers: Persona[] = [];
+
+  isAvailable: boolean = true;
+
   id: string | null | undefined;
+  idUser: number | null = null;
+
+  skillToAddId: number[] = [];
 
   ngOnInit() {
 
@@ -43,6 +54,42 @@ export class AssociationsSkillComponent implements OnInit, OnDestroy {
     }
   }
 
+  search(event: any) {
+    const user = event.query;
+
+    this.personaService.searchUser(user).subscribe(response => {
+      this.filteredUsers = response;
+    })
+  }
+
+  addUserToSkill(user: Persona) {
+    user = this.wantedUser;
+    this.idUser = user.id;
+
+    if (this.idUser != null && this.id != null) {
+      const idSkill = parseInt(this.id);
+
+      this.skillToAddId.push(idSkill)
+
+      const switched = this.personaService.addSkillToPersona(this.idUser, this.skillToAddId).pipe(
+        switchMap(x => this.skillService.getUsersBySkillId(idSkill))
+      );
+
+      switched.subscribe(response => {
+        this.associatedUsers = response;
+      });
+    }
+  }
+
+  checkUserAvailability(user: Persona) {
+    if (user?.id != null) {
+      this.personaService.checkUserAvailability(user.id).subscribe(response => {
+        this.isAvailable = response;
+        this.wantedUser = user;
+      });
+    }
+  }
+
   removeUsersFromSkill() {
     for (const user of this.selectedUsers) {
       if (typeof user.id === "number") {
@@ -51,10 +98,16 @@ export class AssociationsSkillComponent implements OnInit, OnDestroy {
     }
 
     if (this.id != null) {
-      this.skillService.removeUsersFromSkill(this.selectedUsersId, parseInt(this.id)).subscribe();
-    }
+      const idProject: number = parseInt(this.id)
 
-    this.goToSkillList()
+      const switched = this.skillService.removeUsersFromSkill(this.selectedUsersId, parseInt(this.id)).pipe(
+        switchMap(x => this.skillService.getUsersBySkillId(idProject))
+      )
+
+      switched.subscribe(response => {
+        this.associatedUsers = response;
+      })
+    }
   }
 
   goToSkillList(){

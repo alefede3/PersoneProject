@@ -1,10 +1,10 @@
 Tecnologie usate
 
-Back-end	          Java 17, Spring Boot, Spring Data JPA, H2 DB
+Back-end --> Java 17, Spring Boot, Spring Data JPA, H2 DB
 
-Front-end	          Angular 16+, TypeScript, PrimeNG
+Front-end	--> Angular 16+, TypeScript, PrimeNG
 
-Build tools	        Maven (back-end), Angular CLI.
+Build tools	--> Maven (back-end), Angular CLI.
 
 Come avviare il progetto in locale:
 

@@ -52,7 +52,6 @@ public class PersoneController {
 
     @PostMapping("/user/{id}/project")
     public void addProjectToPersona(@RequestBody PersonaProgettoDTO personaProgettoDTO, @PathVariable Long id) {
-        System.out.print("id progetto nel controller " + personaProgettoDTO.getIdSelectedProject());
         personeService.addProjectToPersona(personaProgettoDTO);
     }
 

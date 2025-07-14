@@ -84,9 +84,6 @@ public class SkillController {
 
     @DeleteMapping("/skill/{id}/users")
     public void removeUsersFromSkill(@RequestParam List<Long> personaId, @PathVariable Long id){
-
-        System.out.println("id Persone da cui togliere la skill " + personaId);
-
         skillService.removeUsersFromSkill(personaId);
     }
 }

@@ -49,8 +49,6 @@ public class SkillService {
     }
 
     public void removeUsersFromSkill (List<Long> personaId ){
-
-        System.out.println("id Persone da cui togliere la skill " + personaId);
         personaSkillRepository.removeUsersFromSkill(personaId);
     }
 }

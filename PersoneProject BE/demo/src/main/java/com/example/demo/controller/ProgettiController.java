@@ -85,8 +85,6 @@ public class ProgettiController{
 
     @DeleteMapping("/project/{id}/users")
     public void removeUsersFromProject(@RequestParam List<Long> personaId, @PathVariable Long id){
-        System.out.println("id Persone da cui togliere la skill in progetticontroller " + personaId);
-
         progettiService.removeUsersFromProject(personaId);
     }
 }

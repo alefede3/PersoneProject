@@ -1,13 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.model.Persone;
 import com.example.demo.service.PersoneService;
@@ -45,7 +39,7 @@ public class ModificaController {
     }
 
     @DeleteMapping("person/delete")
-    public void deletePersona(Long id){
+    public void deletePersona(@RequestParam Long id){
         personeService.deletePersona(id);
     }
 }
